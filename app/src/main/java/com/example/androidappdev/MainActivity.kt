@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,7 +36,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidAppDevTheme {
-                OverallDisplay()
+                OverallDisplay(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            Color.DarkGray
+                        )
+                )
             }
         }
     }
@@ -46,64 +53,67 @@ class MainActivity : ComponentActivity() {
         var total by remember { mutableIntStateOf(0) }
         var output by remember { mutableStateOf("") }
         var currentValue by remember { mutableStateOf("") }
-        Display(textToDisplay = output.toString())
-        Spacer(modifier = Modifier.size(300.dp))
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .padding(50.dp)
-                    .fillMaxWidth()
-            ) {
-                CustomButton(stringResource(R.string.one),
-                    clickButton = { currentValue += "1";
-                                    output = currentValue })
-                CustomButton(stringResource(R.string.four),
-                    clickButton = { currentValue += "4";
-                                    output = currentValue })
-                CustomButton(stringResource(R.string.seven),
-                    clickButton = { currentValue += "7" ;
-                                    output = currentValue})
-                CustomButton(stringResource(R.string.add),
-                    clickButton = { total += currentValue.toInt();
-                                    currentValue = String();
-                                    output = total.toString()})
-                CustomButton(stringResource(R.string.cancel),
-                    clickButton = { currentValue = ""; total = 0;
-                                    output = String() })
-                CustomButton(stringResource(R.string.equals),
-                    clickButton = { if(currentValue.isNotEmpty()) {
-                                        total += currentValue.toInt();
-                                        output = total.toString();
-                                        currentValue = String();
-                                        total=0
-                                    }
-                                    })
 
+        val buttonPadding = Modifier.padding(horizontal = 10.dp)
+
+        AndroidAppDevTheme {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                OutputDisplay(textToDisplay = output, modifier)
+                Spacer(modifier = Modifier.size(30.dp))
+
+                CustomButton(
+                    stringResource(R.string.one), clickButton = {
+                        currentValue += "1"
+                        output = currentValue
+                    }, buttonPadding
+                )
+                CustomButton(
+                    stringResource(R.string.four), clickButton = {
+                        currentValue += "4"
+                        output = currentValue
+                    }, buttonPadding
+                )
+                CustomButton(
+                    stringResource(R.string.seven), clickButton = {
+                        currentValue += "7"
+                        output = currentValue
+                    }, buttonPadding
+                )
+                CustomButton(
+                    stringResource(R.string.add), clickButton = {
+                        if (currentValue.isNotEmpty()) total += currentValue.toInt()
+                        currentValue = String()
+                        output = total.toString()
+                    }, buttonPadding
+                )
+                CustomButton(
+                    stringResource(R.string.equals), clickButton = {
+                        if (currentValue.isNotEmpty()) total += currentValue.toInt()
+                        output = total.toString()
+                        currentValue = String()
+                        total = 0
+                    }, buttonPadding
+                )
+                CustomButton(stringResource(R.string.cancel), clickButton = {
+                    currentValue = String()
+                    total = 0
+                    output = String()
+                }, buttonPadding)
 
             }
 
         }
     }
-    @Composable
-    fun CustomButton(text: String, clickButton: () -> Unit) {
-        Button(
-            onClick = clickButton,
-            shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.padding(horizontal = 10.dp)
-        ) {
-            Text(text = text, fontSize = 20.sp)
-        }
-    }
 
 
     @Composable
-    fun Display(textToDisplay: String) {
+    fun OutputDisplay(textToDisplay: String, modifier: Modifier = Modifier) {
         Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.DarkGray)
+            horizontalArrangement = Arrangement.Center, modifier = modifier
         ) {
             Text(
                 textToDisplay,
@@ -113,6 +123,23 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
+
+    @Composable
+    fun CustomButton(
+        text: String, clickButton: () -> Unit, modifier: Modifier = Modifier
+    ) {
+        Button(
+            onClick = clickButton,
+            shape = RoundedCornerShape(10.dp),
+            modifier = modifier
+        ) {
+            Text(text = text, fontSize = 20.sp)
+        }
+        Spacer(
+            modifier = Modifier.size(30.dp)
+        )
+    }
+}
 
 
 

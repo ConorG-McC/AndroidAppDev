@@ -39,7 +39,7 @@ fun NavigationGraph(
             AddScreen(stringResource(R.string.add_button), modifier)
         }
         composable(NavScreen.Exit.route) {
-            exitProcess(0);
+            exitProcess(0)
         }
     }
 }

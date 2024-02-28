@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BottomNav1</string>
+    <string name="app_name">AndroidAppDev</string>
     <string name="add_button">Add</string>
     <string name="home_button">Home</string>
     <string name="login_button">Login</string>

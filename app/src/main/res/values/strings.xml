@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">AndroidAppDev</string>
-    <string name="add_button">Add</string>
-    <string name="home_button">Home</string>
     <string name="login_button">Login</string>
+    <string name="home_button">Home</string>
+    <string name="team_button">Team</string>
+    <string name="employee_button">Employee</string>
+    <string name="tasks_button">Tasks</string>
     <string name="add">Add</string>
     <string name="close">Close</string>
     <string name="first_name_hint">First Name</string>

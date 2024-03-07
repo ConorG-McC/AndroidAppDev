@@ -55,7 +55,9 @@ private fun createListOfItems(enabled: Boolean): List<NavScreen> {
     return if(enabled){
         listOf(
             NavScreen.Home,
-            NavScreen.Add,
+            NavScreen.Team,
+            NavScreen.Employees,
+            NavScreen.Tasks,
             NavScreen.Exit
         )
     }

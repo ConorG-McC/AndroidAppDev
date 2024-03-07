@@ -1,4 +1,4 @@
-package com.example.androidappdev.presentation.screens
+package com.example.androidappdev.presentation.screens.employees
 
 import android.content.Context
 import android.widget.Toast
@@ -11,14 +11,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.androidappdev.presentation.components.FloatingButton
 
 
 @Composable
 fun EmployeeScreen(text:String,
-               context: Context,
-               modifier: Modifier = Modifier
+               modifier: Modifier = Modifier, navController: NavController
 ) {
+    val onClickToAddEmployee = { navController.navigate("AddEmployee") }
+
     Column(
         modifier = modifier
     ) {
@@ -30,8 +32,7 @@ fun EmployeeScreen(text:String,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        FloatingButton("woop",
-            { Toast.makeText(context,"Woop", Toast.LENGTH_LONG).show()},
-            modifier)
+        FloatingButton("woop", clickAction = onClickToAddEmployee, modifier = modifier)
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.androidappdev.presentation.screens
+package com.example.androidappdev.presentation.screens.team
 
 import android.content.Context
 import android.widget.Toast

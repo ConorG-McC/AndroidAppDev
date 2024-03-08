@@ -8,11 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.Employee
-import com.example.androidappdev.data.InMemoryRepository
+import com.example.androidappdev.data.`object`.Employee
+import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 import java.util.UUID
 
-class EmployeeViewModel(private val repo: InMemoryRepository) : ViewModel() {
+class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) : ViewModel() {
+
     private var _firstName = MutableLiveData(String())
     val firstName: LiveData<String> = _firstName
 
@@ -61,7 +62,7 @@ class EmployeeViewModel(private val repo: InMemoryRepository) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EmployeeViewModel(
+                AddEmployeeViewModel(
                     repo = MyAppApplication.employeeInMemoryRepository
                 )
             }

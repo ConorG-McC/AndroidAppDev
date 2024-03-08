@@ -1,16 +1,18 @@
 package com.example.androidappdev.presentation.screens.employees.view
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.Employee
-import com.example.androidappdev.data.InMemoryRepository
+import com.example.androidappdev.data.`object`.Employee
+import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 
-class EmployeeViewModel(private val repo: InMemoryRepository) : ViewModel() {
+class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) : ViewModel() {
     val items = mutableStateListOf<Employee>()//No live data in this example
     var selectedEmployeeIndex: Int =-1
     init {

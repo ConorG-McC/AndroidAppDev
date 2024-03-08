@@ -27,7 +27,7 @@ fun AddTaskScreen(
     text: String,
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    vm: TaskViewModel = viewModel(),
+    vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
 ) {
     val title: String by vm.title.observeAsState("")
     val description: String by vm.description.observeAsState("")
@@ -76,7 +76,7 @@ fun AddTaskScreen(
                 modifier = Modifier.fillMaxWidth()
                 ){
                 CustomButton(stringResource(R.string.close),
-                clickButton = { navController.navigate("Tasks") })
+                    clickButton = { navController.navigate("Tasks") })
             }
         }
     }

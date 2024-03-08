@@ -1,7 +1,6 @@
 package com.example.androidappdev.presentation.screens.team
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,14 +10,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.androidappdev.presentation.components.FloatingButton
 
 
 @Composable
 fun TeamScreen(text:String,
                context: Context,
-               modifier: Modifier = Modifier
+               modifier: Modifier = Modifier,
+               navController: NavController
 ) {
+    val onClickToAddTeam = {navController.navigate("AddTeam")}
+
     Column(
         modifier = modifier
     ) {
@@ -30,8 +33,7 @@ fun TeamScreen(text:String,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        FloatingButton("woop",
-            { Toast.makeText(context,"Woop", Toast.LENGTH_LONG).show()},
-            modifier)
+        FloatingButton("woop", clickAction = onClickToAddTeam, modifier = modifier)
+
     }
 }

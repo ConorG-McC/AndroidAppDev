@@ -7,7 +7,7 @@ data class Employee(
     var firstName: String,
     var surname: String,
 )  {
-    override fun toString(): String = "Employee Name: $firstName $surname"
+    override fun toString(): String = "Employee ID: $id \nEmployee Name: $firstName $surname"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -1,4 +1,4 @@
-package com.example.androidappdev
+package com.example.androidappdev.core
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

@@ -11,7 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import com.example.androidappdev.navigation.NavigationGraph
+import com.example.androidappdev.presentation.navigation.NavigationGraph
 import com.example.androidappdev.presentation.components.BottomNavBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.androidappdev.R
-import com.example.androidappdev.navigation.NavScreen
+import com.example.androidappdev.presentation.navigation.NavScreen
 
 @Composable
 fun BottomNavBar(navController: NavController, enabled: Boolean) {
@@ -27,17 +27,18 @@ fun BottomNavBar(navController: NavController, enabled: Boolean) {
 
         itemsList.forEach { item ->
             BottomNavigationItem(
-                selected = currentRoute == item.route,
 
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.route) },
                 label = { Text(text = item.route,
                     fontSize = 9.sp) },
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
-
+                selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let {
-                            popUpTo(it) {
+                        navController.graph.startDestinationRoute?.let { screenRoute ->
+                            popUpTo(screenRoute) {
                                 saveState = true
                             }
                         }

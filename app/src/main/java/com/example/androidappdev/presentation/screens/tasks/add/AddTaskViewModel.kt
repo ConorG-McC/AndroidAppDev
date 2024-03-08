@@ -4,10 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidappdev.data.Task
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.androidappdev.core.MyAppApplication
+import com.example.androidappdev.data.`object`.Task
+import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 import java.util.UUID
 
-class TaskViewModel : ViewModel() {
+class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
 
@@ -34,9 +39,10 @@ class TaskViewModel : ViewModel() {
                 _title.value.toString(),
                 _description.value.toString()
             )
+            Log.d("NEW TASK TO ADD", newTask.toString())
+            repo.addTask(newTask)
             clear()
-
-            Log.d("NEW TASK", newTask.toString())
+            Log.d("NEW TASK ADDED TO REPO", repo.getAllTasks().size.toString())
 
         }
     }
@@ -44,5 +50,16 @@ class TaskViewModel : ViewModel() {
     private fun clear() {
         _title.value = String()
         _description.value = String()
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                AddTaskViewModel(
+                    repo = MyAppApplication.taskInMemoryRepository
+                )
+            }
+        }
+
     }
 }

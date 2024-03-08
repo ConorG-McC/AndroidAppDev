@@ -1,7 +1,6 @@
-package com.example.androidappdev.presentation.screens.employees.view
+package com.example.androidappdev.presentation.screens.tasks.view
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,26 +31,22 @@ import com.example.androidappdev.R
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.FloatingButton
 
-
 @Composable
-fun EmployeeScreen(modifier: Modifier = Modifier,
-                   vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory),
-                   context: Context,
-                   onIndexChange: (Int) -> Unit,
-                   text:String,
-                   navController: NavController,
-){
-    Log.v("TEST","EmployeeScreen called")
-
-    val onClickToAddEmployee = { navController.navigate("AddEmployee") }
-
+fun TasksScreen(modifier: Modifier = Modifier,
+                vm: TaskViewModel = viewModel(factory = TaskViewModel.Factory),
+                context: Context,
+                onIndexChange: (Int) -> Unit,
+                text:String,
+                navController: NavController,
+) {
+    val onClickToAddTask = { navController.navigate("AddTask") }
 
     Box(modifier = modifier) {
-        Column {
+        Column(
+            modifier = modifier
+        ) {
             Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth(),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = text,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
@@ -62,38 +57,33 @@ fun EmployeeScreen(modifier: Modifier = Modifier,
             LazyColumnWithSelection(vm, onIndexChange)
 
             CustomButton(
-                stringResource(R.string.edit),
-                clickButton = { if (vm.selectedEmployeeIndex == -1) {
-                    (Toast.makeText(context, "No employee selected", Toast.LENGTH_SHORT)).show()
-                } else {
-                    navController.navigate("EditEmployee") }
-                }
-            )
-            CustomButton(
                 stringResource(R.string.delete),
                 clickButton = {
-                    if (vm.selectedEmployeeIndex == -1) {
-                        (Toast.makeText(context, "No employee selected", Toast.LENGTH_SHORT)).show()
-                    } else {
-                        vm.deleteEmployee()
-                    }
+                        if (vm.selectedTaskIndex == -1) {
+                            (Toast.makeText(
+                                context,
+                                "No employee selected",
+                                Toast.LENGTH_SHORT
+                            )).show()
+                        } else {
+                            vm.deleteTask()
+                        }
                 }
             )
-
         }
     }
 
-
-        FloatingButton(
-            "woop",
-            clickAction = onClickToAddEmployee,
+        FloatingButton("woop",
+            clickAction = onClickToAddTask,
             modifier = modifier
         )
     }
 
 
+
+
 @Composable
-fun LazyColumnWithSelection(vm: EmployeeViewModel, onIndexChange: (Int) -> Unit){
+fun LazyColumnWithSelection(vm: TaskViewModel, onIndexChange: (Int) -> Unit){
     var selectedIndex by remember { mutableIntStateOf(-1) }
     LazyColumn(modifier = Modifier.padding( vertical = 20.dp)) {
         itemsIndexed(vm.items) { index, item ->
@@ -102,10 +92,10 @@ fun LazyColumnWithSelection(vm: EmployeeViewModel, onIndexChange: (Int) -> Unit)
                 item = item.toString(),
                 selected = selectedIndex == index,
                 onClick = {
-                    index: Int ->
+                        index: Int ->
                     selectedIndex = index //local state for highlighting selected item
                     onIndexChange(selectedIndex)
-                    vm.selectedEmployeeIndex = index
+                    vm.selectedTaskIndex = index
                 }
             )
         }

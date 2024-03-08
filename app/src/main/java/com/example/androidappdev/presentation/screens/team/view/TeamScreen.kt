@@ -1,5 +1,6 @@
-package com.example.androidappdev.presentation.screens.tasks
+package com.example.androidappdev.presentation.screens.team.view
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,11 +13,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.androidappdev.presentation.components.FloatingButton
 
+
 @Composable
-fun TasksScreen(
-    text: String, modifier: Modifier = Modifier, navController: NavController
+fun TeamScreen(text:String,
+               context: Context,
+               modifier: Modifier = Modifier,
+               navController: NavController
 ) {
-    val onClickToAddTask = { navController.navigate("AddTask") }
+    val onClickToAddTeam = {navController.navigate("AddTeam")}
 
     Column(
         modifier = modifier
@@ -29,7 +33,7 @@ fun TasksScreen(
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        FloatingButton("woop", clickAction = onClickToAddTask, modifier = modifier)
+        FloatingButton("woop", clickAction = onClickToAddTeam, modifier = modifier)
 
-        }
     }
+}

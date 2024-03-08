@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidappdev.data.Team
+import com.example.androidappdev.data.`object`.Team
 import java.util.UUID
 
-class TeamViewModel : ViewModel() {
+class AddTeamViewModel : ViewModel() {
     private var _teamName = MutableLiveData(String())
     val teamName: LiveData<String> = _teamName
 

@@ -23,7 +23,7 @@ import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
-fun AddEmployeeScreen(text: String, modifier: Modifier = Modifier, navController: NavHostController, vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory)) {
+fun AddEmployeeScreen(text: String, modifier: Modifier = Modifier, navController: NavHostController, vm: AddEmployeeViewModel = viewModel(factory = AddEmployeeViewModel.Factory)) {
     val firstName: String by vm.firstName.observeAsState("")
     val surname: String by vm.surname.observeAsState("")
     val keyboardController = LocalSoftwareKeyboardController.current

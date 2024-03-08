@@ -1,8 +1,9 @@
-package com.example.androidappdev.data
+package com.example.androidappdev.data.repositories
 
 import android.util.Log
+import com.example.androidappdev.data.`object`.Employee
 
-class InMemoryRepository (private val employeeRepository:
+class EmployeeInMemoryRepository (private val employeeRepository:
                           MutableList<Employee>) {
 
     fun getAllEmployee(): MutableList<Employee>{

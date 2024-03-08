@@ -27,7 +27,7 @@ fun AddTeamScreen(
     text: String,
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    vm: TeamViewModel = viewModel(),
+    vm: AddTeamViewModel = viewModel(),
 ) {
     val teamName: String by vm.teamName.observeAsState("")
     val keyboardController = LocalSoftwareKeyboardController.current

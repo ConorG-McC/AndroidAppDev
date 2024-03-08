@@ -1,17 +1,13 @@
 package com.example.androidappdev.presentation.screens.tasks.view
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.`object`.Employee
 import com.example.androidappdev.data.`object`.Task
-import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 
 class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {

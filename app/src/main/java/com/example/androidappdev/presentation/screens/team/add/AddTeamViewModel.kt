@@ -15,7 +15,7 @@ class AddTeamViewModel : ViewModel() {
         _teamName.value = teamName
     }
 
-    fun allDataIsValid(): Boolean {
+    private fun allDataIsValid(): Boolean {
         return _teamName.value!!.isNotBlank()
     }
 

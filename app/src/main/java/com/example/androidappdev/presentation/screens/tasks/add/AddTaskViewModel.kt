@@ -27,7 +27,7 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
         _description.value = description
     }
 
-    fun allDataIsValid(): Boolean {
+    private fun allDataIsValid(): Boolean {
         return _title.value!!.isNotBlank()
                 && _description.value!!.isNotBlank()
     }

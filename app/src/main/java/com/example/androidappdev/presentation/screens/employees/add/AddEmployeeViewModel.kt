@@ -28,7 +28,7 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) : ViewM
         _surname.value = description
     }
 
-    fun allDataIsValid(): Boolean {
+    private fun allDataIsValid(): Boolean {
         return _firstName.value!!.isNotBlank()
                 && _surname.value!!.isNotBlank()
     }

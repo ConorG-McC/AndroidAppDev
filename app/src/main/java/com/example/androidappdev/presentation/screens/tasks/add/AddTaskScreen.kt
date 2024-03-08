@@ -23,7 +23,12 @@ import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
-fun AddTaskScreen(text: String, modifier: Modifier = Modifier, navController: NavHostController,vm: TaskViewModel = viewModel(),) {
+fun AddTaskScreen(
+    text: String,
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    vm: TaskViewModel = viewModel(),
+) {
     val title: String by vm.title.observeAsState("")
     val description: String by vm.description.observeAsState("")
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -60,8 +65,8 @@ fun AddTaskScreen(text: String, modifier: Modifier = Modifier, navController: Na
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CustomButton(stringResource(R.string.add),
-                    clickButton = { vm.add();
-                        keyboardController?.hide();
+                    clickButton = { vm.add()
+                        keyboardController?.hide()
                         navController.navigate("Tasks")
                     }
                 )

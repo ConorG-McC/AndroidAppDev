@@ -15,12 +15,13 @@ import com.example.androidappdev.presentation.components.FloatingButton
 
 
 @Composable
-fun TeamScreen(text:String,
-               context: Context,
-               modifier: Modifier = Modifier,
-               navController: NavController
+fun TeamScreen(
+    text: String,
+    context: Context,
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
-    val onClickToAddTeam = {navController.navigate("AddTeam")}
+    val onClickToAddTeam = { navController.navigate("AddTeam") }
 
     Column(
         modifier = modifier
@@ -33,7 +34,8 @@ fun TeamScreen(text:String,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        FloatingButton("woop", clickAction = onClickToAddTeam, modifier = modifier)
-
+        FloatingButton(
+            "woop", clickAction = onClickToAddTeam, modifier = modifier
+        )
     }
 }

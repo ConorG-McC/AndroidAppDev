@@ -43,7 +43,7 @@ fun AddTeamScreen(
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        Column(modifier = Modifier.align(Alignment.CenterHorizontally)){
+        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             CustomTextField(
                 stringResource(R.string.team_name_hint),
                 text = teamName,
@@ -56,20 +56,18 @@ fun AddTeamScreen(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                CustomButton(
-                    stringResource(R.string.add),
-                    clickButton = { vm.add()
-                        keyboardController?.hide()
-                        navController.navigate("Team")
-                    }
-                )
+                CustomButton(stringResource(R.string.add), clickButton = {
+                    vm.add()
+                    keyboardController?.hide()
+                    navController.navigate("Team")
+                })
             }
 
-            Row( horizontalArrangement = Arrangement.Center,
+            Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
-            ){
-                CustomButton(
-                    stringResource(R.string.close),
+            ) {
+                CustomButton(stringResource(R.string.close),
                     clickButton = { navController.navigate("Team") })
             }
         }

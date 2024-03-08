@@ -15,29 +15,25 @@ import java.util.UUID
 class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
-
     fun onTitleChange(title: String) {
         _title.value = title
     }
 
     private var _description = MutableLiveData(String())
     val description: LiveData<String> = _description
-
     fun onDescriptionChange(description: String) {
         _description.value = description
     }
 
     private fun allDataIsValid(): Boolean {
-        return _title.value!!.isNotBlank()
-                && _description.value!!.isNotBlank()
+        return _title.value!!.isNotBlank() && _description.value!!.isNotBlank()
     }
 
     fun add() {
         if (allDataIsValid()) {
-            val newTask = Task(
-                UUID.randomUUID(),
-                _title.value.toString(),
-                _description.value.toString()
+            val newTask = Task(UUID.randomUUID(),
+                               _title.value.toString(),
+                               _description.value.toString()
             )
             Log.d("NEW TASK TO ADD", newTask.toString())
             repo.addTask(newTask)
@@ -55,8 +51,7 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddTaskViewModel(
-                    repo = MyAppApplication.taskInMemoryRepository
+                AddTaskViewModel(repo = MyAppApplication.taskInMemoryRepository
                 )
             }
         }

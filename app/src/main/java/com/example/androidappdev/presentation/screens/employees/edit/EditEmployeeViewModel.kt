@@ -12,30 +12,30 @@ import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.`object`.Employee
 import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 
-class EditEmployeeViewModel (private val repo: EmployeeInMemoryRepository) : ViewModel() {
-    private var selectedEmployee : Employee? = null
+class EditEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
+    ViewModel() {
+    private var selectedEmployee: Employee? = null
 
     var firstName by mutableStateOf("")
     var surname by mutableStateOf("")
-
-    fun firstNameIsValid():Boolean{
+    fun firstNameIsValid(): Boolean {
         return firstName.isNotBlank()
     }
 
-    fun surnameIsValid():Boolean{
+    fun surnameIsValid(): Boolean {
         return surname.isNotBlank()
     }
 
-    fun getEmployees(selectedIndex: Int){//Display when screen loads
-        if(selectedEmployee==null) {
+    fun getEmployees(selectedIndex: Int) {//Display when screen loads
+        if (selectedEmployee == null) {
             selectedEmployee = repo.getAllEmployee()[selectedIndex]
-            Log.v("OK",selectedEmployee!!.toString())
+            Log.v("OK", selectedEmployee!!.toString())
             firstName = selectedEmployee!!.firstName
             surname = selectedEmployee!!.surname
         }
     }
 
-    fun updateEmployee(){
+    fun updateEmployee() {
         selectedEmployee!!.firstName = firstName
         selectedEmployee!!.surname = surname
         repo.edit(selectedEmployee!!)
@@ -45,8 +45,8 @@ class EditEmployeeViewModel (private val repo: EmployeeInMemoryRepository) : Vie
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EditEmployeeViewModel(
-                    repo = MyAppApplication.employeeInMemoryRepository)
+                EditEmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
+                )
             }
         }
     }

@@ -23,13 +23,16 @@ import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
-fun AddEmployeeScreen(text: String, modifier: Modifier = Modifier, navController: NavHostController, vm: AddEmployeeViewModel = viewModel(factory = AddEmployeeViewModel.Factory)) {
+fun AddEmployeeScreen(text: String,
+                      modifier: Modifier = Modifier,
+                      navController: NavHostController,
+                      vm: AddEmployeeViewModel = viewModel(factory = AddEmployeeViewModel.Factory)
+) {
     val firstName: String by vm.firstName.observeAsState("")
     val surname: String by vm.surname.observeAsState("")
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Column(
-        modifier = modifier
+    Column(modifier = modifier
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -39,41 +42,35 @@ fun AddEmployeeScreen(text: String, modifier: Modifier = Modifier, navController
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        Column(modifier = Modifier.align(Alignment.CenterHorizontally)){
-            CustomTextField(
-                stringResource(R.string.first_name_hint),
-                text = firstName,
-                onNameChange = { vm.onFirstNameChange(it) },
-                stringResource(R.string.first_name_error_message),
-                !vm.firstName.value.isNullOrBlank()
+        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            CustomTextField(stringResource(R.string.first_name_hint),
+                            text = firstName,
+                            onNameChange = { vm.onFirstNameChange(it) },
+                            stringResource(R.string.first_name_error_message),
+                            !vm.firstName.value.isNullOrBlank()
             )
-            CustomTextField(
-                stringResource(R.string.surname_hint),
-                text = surname,
-                onNameChange = { vm.onSurnameChange(it) },
-                stringResource(R.string.surname_error_message),
-                !vm.surname.value.isNullOrBlank()
+            CustomTextField(stringResource(R.string.surname_hint),
+                            text = surname,
+                            onNameChange = { vm.onSurnameChange(it) },
+                            stringResource(R.string.surname_error_message),
+                            !vm.surname.value.isNullOrBlank()
             )
 
-            Row(
-                horizontalArrangement = Arrangement.Center,
+            Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                CustomButton(
-                    stringResource(R.string.add),
-                    clickButton = { vm.add()
-                        keyboardController?.hide()
-                        navController.navigate("Employees")
-                    }
-                )
+                CustomButton(stringResource(R.string.add), clickButton = {
+                    vm.add()
+                    keyboardController?.hide()
+                    navController.navigate("Employees")
+                })
             }
 
-            Row( horizontalArrangement = Arrangement.Center,
+            Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
-            ){
-                CustomButton(
-                    stringResource(R.string.close),
-                    clickButton = { navController.navigate("Employees") })
+            ) {
+                CustomButton(stringResource(R.string.close),
+                             clickButton = { navController.navigate("Employees") })
             }
         }
     }

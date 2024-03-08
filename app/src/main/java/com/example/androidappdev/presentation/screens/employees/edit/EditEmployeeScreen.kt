@@ -18,14 +18,13 @@ import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
 fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmployeeViewModel.Factory),
-               selectedContactIndex:Int,
-               onClickToHome: () -> Unit){
+                       selectedContactIndex: Int,
+                       onClickToHome: () -> Unit
+) {
 
     vm.getEmployees(selectedContactIndex) //called each time component is updated
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
+    Column(modifier = Modifier.fillMaxSize()
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -36,27 +35,24 @@ fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmplo
             color = Color.Black,
         )
         Column {
-            CustomTextField(
-                stringResource(R.string.first_name_hint),
-                text = vm.firstName,
-                onNameChange = { vm.firstName = it },
-                stringResource(R.string.first_name_error_message),
-                vm.firstNameIsValid()
+            CustomTextField(stringResource(R.string.first_name_hint),
+                            text = vm.firstName,
+                            onNameChange = { vm.firstName = it },
+                            stringResource(R.string.first_name_error_message),
+                            vm.firstNameIsValid()
             )
 
-            CustomTextField(
-                stringResource(R.string.surname_hint),
-                text = vm.surname,
-                onNameChange = { vm.surname = it },
-                stringResource(R.string.surname_error_message),
-                vm.surnameIsValid()
+            CustomTextField(stringResource(R.string.surname_hint),
+                            text = vm.surname,
+                            onNameChange = { vm.surname = it },
+                            stringResource(R.string.surname_error_message),
+                            vm.surnameIsValid()
             )
 
-
-            CustomButton(
-                stringResource(R.string.edit),
-                clickButton = { vm.updateEmployee()
-                                 onClickToHome()})
+            CustomButton(stringResource(R.string.edit), clickButton = {
+                vm.updateEmployee()
+                onClickToHome()
+            })
 
         }
     }

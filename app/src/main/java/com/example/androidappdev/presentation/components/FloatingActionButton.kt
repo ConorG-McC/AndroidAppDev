@@ -12,11 +12,10 @@ import androidx.compose.ui.Modifier
 @Composable
 fun FloatingButton(contentDescription: String,
                    clickAction: () -> Unit,
-                   modifier: Modifier = Modifier) {
-    Row (
-        modifier = modifier,
-        horizontalArrangement = Arrangement.End
-    ){
+                   modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.End
+    ) {
         FloatingActionButton(onClick = clickAction) {
             Icon(Icons.Filled.Add, contentDescription = contentDescription)
         }

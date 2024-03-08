@@ -12,7 +12,7 @@ import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 
 class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     val items = mutableStateListOf<Task>()//No live data in this example
-    var selectedTaskIndex: Int =-1
+    var selectedTaskIndex: Int = -1
 
     init {
         Log.v("OK", "init home TEST")
@@ -20,11 +20,11 @@ class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
         Log.v("OK", "Number of tasks loaded TEST: ${items.size}")
     }
 
-    fun deleteTask(){
+    fun deleteTask() {
         repo.deleteTask(repo.getAllTasks()[selectedTaskIndex])
         items.removeAt(selectedTaskIndex)
-        selectedTaskIndex=-1
-        Log.v("OK","repo size " + repo.getAllTasks().size.toString())
+        selectedTaskIndex = -1
+        Log.v("OK", "repo size " + repo.getAllTasks().size.toString())
     }
 
     // Define ViewModel factory in a companion object

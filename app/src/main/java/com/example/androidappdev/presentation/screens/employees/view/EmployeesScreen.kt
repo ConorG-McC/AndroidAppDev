@@ -32,16 +32,16 @@ import com.example.androidappdev.R
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.FloatingButton
 
-
 @Composable
-fun EmployeeScreen(modifier: Modifier = Modifier,
-                   vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory),
-                   context: Context,
-                   onIndexChange: (Int) -> Unit,
-                   text:String,
-                   navController: NavController,
-){
-    Log.v("TEST","EmployeeScreen called")
+fun EmployeeScreen(
+        modifier: Modifier = Modifier,
+        vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory),
+        context: Context,
+        onIndexChange: (Int) -> Unit,
+        text: String,
+        navController: NavController,
+) {
+    Log.v("TEST", "EmployeeScreen called")
 
     val onClickToAddEmployee = { navController.navigate("AddEmployee") }
 
@@ -61,70 +61,63 @@ fun EmployeeScreen(modifier: Modifier = Modifier,
 
             LazyColumnWithSelection(vm, onIndexChange)
 
-            CustomButton(
-                stringResource(R.string.edit),
-                clickButton = { if (vm.selectedEmployeeIndex == -1) {
-                    (Toast.makeText(context, "No employee selected", Toast.LENGTH_SHORT)).show()
+            CustomButton(stringResource(R.string.edit), clickButton = {
+                if (vm.selectedEmployeeIndex == -1) {
+                    (Toast.makeText(context,
+                                    "No employee selected",
+                                    Toast.LENGTH_SHORT
+                    )).show()
                 } else {
-                    navController.navigate("EditEmployee") }
+                    navController.navigate("EditEmployee")
                 }
-            )
-            CustomButton(
-                stringResource(R.string.delete),
-                clickButton = {
-                    if (vm.selectedEmployeeIndex == -1) {
-                        (Toast.makeText(context, "No employee selected", Toast.LENGTH_SHORT)).show()
-                    } else {
-                        vm.deleteEmployee()
-                    }
+            })
+            CustomButton(stringResource(R.string.delete), clickButton = {
+                if (vm.selectedEmployeeIndex == -1) {
+                    (Toast.makeText(context,
+                                    "No employee selected",
+                                    Toast.LENGTH_SHORT
+                    )).show()
+                } else {
+                    vm.deleteEmployee()
                 }
-            )
+            })
 
         }
     }
 
-
-        FloatingButton(
-            "woop",
-            clickAction = onClickToAddEmployee,
-            modifier = modifier
-        )
-    }
-
+    FloatingButton("woop",
+                   clickAction = onClickToAddEmployee,
+                   modifier = modifier
+    )
+}
 
 @Composable
-fun LazyColumnWithSelection(vm: EmployeeViewModel, onIndexChange: (Int) -> Unit){
+fun LazyColumnWithSelection(vm: EmployeeViewModel, onIndexChange: (Int) -> Unit
+) {
     var selectedIndex by remember { mutableIntStateOf(-1) }
-    LazyColumn(modifier = Modifier.padding( vertical = 20.dp)) {
+    LazyColumn(modifier = Modifier.padding(vertical = 20.dp)) {
         itemsIndexed(vm.items) { index, item ->
-            ItemView(
-                index = index,
-                item = item.toString(),
-                selected = selectedIndex == index,
-                onClick = {
-                    index: Int ->
-                    selectedIndex = index //local state for highlighting selected item
-                    onIndexChange(selectedIndex)
-                    vm.selectedEmployeeIndex = index
-                }
-            )
+            ItemView(index = index,
+                     item = item.toString(),
+                     selected = selectedIndex == index,
+                     onClick = { index: Int ->
+                         selectedIndex =
+                             index //local state for highlighting selected item
+                         onIndexChange(selectedIndex)
+                         vm.selectedEmployeeIndex = index
+                     })
         }
     }
 }
 
 @Composable
-fun ItemView(index: Int,
-             item: String,
-             selected: Boolean,
-             onClick: (Int) -> Unit){
-    Text(
-        text = item,
-        modifier = Modifier
-            .clickable {
-                onClick.invoke(index)
-            }
-            .background(if (selected) MaterialTheme.colors.secondary else Color.Transparent)
-            .fillMaxWidth()
-            .padding(10.dp)
-    )
+fun ItemView(index: Int, item: String, selected: Boolean, onClick: (Int) -> Unit
+) {
+    Text(text = item, modifier = Modifier
+        .clickable {
+            onClick.invoke(index)
+        }
+        .background(if (selected) MaterialTheme.colors.secondary else Color.Transparent)
+        .fillMaxWidth()
+        .padding(10.dp))
 }

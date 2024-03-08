@@ -12,21 +12,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoginScreen(
-    text: String, clickAction: () -> Unit, modifier: Modifier = Modifier
+fun LoginScreen(text: String,
+                clickAction: () -> Unit,
+                modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
+    Column(modifier = modifier
     ) {
-        Button(
-            onClick = clickAction,
-            shape = RoundedCornerShape(10.dp),
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .align(Alignment.CenterHorizontally)
+        Button(onClick = clickAction,
+               shape = RoundedCornerShape(10.dp),
+               modifier = Modifier
+                   .padding(horizontal = 10.dp)
+                   .align(Alignment.CenterHorizontally)
         ) {
             Text(text = text, fontSize = 20.sp)
         }
     }
-
 }

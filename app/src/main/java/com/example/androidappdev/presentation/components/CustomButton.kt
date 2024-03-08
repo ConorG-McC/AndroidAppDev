@@ -12,10 +12,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CustomButton(text: String, clickButton: () -> Unit) {
-    Button(
-        onClick = clickButton,
-        shape = RoundedCornerShape(10.dp),
-        modifier = Modifier.padding(horizontal = 10.dp).testTag("Test".plus(text))
+    Button(onClick = clickButton,
+           shape = RoundedCornerShape(10.dp),
+           modifier = Modifier
+               .padding(horizontal = 10.dp)
+               .testTag("Test".plus(text))
     ) {
         Text(text = text, fontSize = 20.sp)
     }

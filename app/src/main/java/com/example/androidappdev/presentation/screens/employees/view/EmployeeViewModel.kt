@@ -10,31 +10,31 @@ import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.`object`.Employee
 import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 
-class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) : ViewModel() {
+class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
+    ViewModel() {
     val items = mutableStateListOf<Employee>()//No live data in this example
-    var selectedEmployeeIndex: Int =-1
+    var selectedEmployeeIndex: Int = -1
+
     init {
         Log.v("OK", "init home TEST")
         items.addAll(repo.getAllEmployee())
         Log.v("OK", "Number of employees loaded TEST: ${items.size}")
     }
 
-    fun deleteEmployee(){
+    fun deleteEmployee() {
         repo.deleteEmployee(repo.getAllEmployee()[selectedEmployeeIndex])
         items.removeAt(selectedEmployeeIndex)
-        selectedEmployeeIndex=-1
-        Log.v("OK","repo size " + repo.getAllEmployee().size.toString())
+        selectedEmployeeIndex = -1
+        Log.v("OK", "repo size " + repo.getAllEmployee().size.toString())
     }
 
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EmployeeViewModel(
-                    repo = MyAppApplication.employeeInMemoryRepository
+                EmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
                 )
             }
         }
-
     }
 }

@@ -12,13 +12,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen(text:String,
-               context: Context,
-               modifier: Modifier = Modifier) {
+fun HomeScreen(text: String, context: Context, modifier: Modifier = Modifier
+) {
 
-
-    Column(
-        modifier = modifier
+    Column(modifier = modifier
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),

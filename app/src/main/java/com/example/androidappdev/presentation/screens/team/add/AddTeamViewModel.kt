@@ -22,13 +22,10 @@ class AddTeamViewModel : ViewModel() {
     fun add() {
         if (allDataIsValid()) {
             val newTeam = Team(
-                UUID.randomUUID(),
-                _teamName.value.toString()
+                UUID.randomUUID(), _teamName.value.toString()
             )
             clear()
-
             Log.d("NEW TEAM", newTeam.toString())
-
         }
     }
 

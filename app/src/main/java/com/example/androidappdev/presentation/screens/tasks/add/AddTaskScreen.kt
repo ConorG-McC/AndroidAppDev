@@ -24,17 +24,16 @@ import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
 fun AddTaskScreen(
-    text: String,
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
+        text: String,
+        modifier: Modifier = Modifier,
+        navController: NavHostController,
+        vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
 ) {
     val title: String by vm.title.observeAsState("")
     val description: String by vm.description.observeAsState("")
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    Column(
-        modifier = modifier
+    Column(modifier = modifier
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -44,39 +43,35 @@ fun AddTaskScreen(
             fontWeight = FontWeight.Bold,
             color = Color.Black,
         )
-        Column(modifier = Modifier.align(Alignment.CenterHorizontally)){
-            CustomTextField(
-                stringResource(R.string.title_hint),
-                text = title,
-                onNameChange = { vm.onTitleChange(it) },
-                stringResource(R.string.title_error_message),
-                !vm.title.value.isNullOrBlank()
+        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            CustomTextField(stringResource(R.string.title_hint),
+                            text = title,
+                            onNameChange = { vm.onTitleChange(it) },
+                            stringResource(R.string.title_error_message),
+                            !vm.title.value.isNullOrBlank()
             )
-            CustomTextField(
-                stringResource(R.string.description_hint),
-                text = description,
-                onNameChange = { vm.onDescriptionChange(it) },
-                stringResource(R.string.description_error_message),
-                !vm.description.value.isNullOrBlank()
+            CustomTextField(stringResource(R.string.description_hint),
+                            text = description,
+                            onNameChange = { vm.onDescriptionChange(it) },
+                            stringResource(R.string.description_error_message),
+                            !vm.description.value.isNullOrBlank()
             )
 
-            Row(
-                horizontalArrangement = Arrangement.Center,
+            Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                CustomButton(stringResource(R.string.add),
-                    clickButton = { vm.add()
-                        keyboardController?.hide()
-                        navController.navigate("Tasks")
-                    }
-                )
+                CustomButton(stringResource(R.string.add), clickButton = {
+                    vm.add()
+                    keyboardController?.hide()
+                    navController.navigate("Tasks")
+                })
             }
 
-            Row( horizontalArrangement = Arrangement.Center,
+            Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
-                ){
+            ) {
                 CustomButton(stringResource(R.string.close),
-                    clickButton = { navController.navigate("Tasks") })
+                             clickButton = { navController.navigate("Tasks") })
             }
         }
     }

@@ -3,11 +3,12 @@ package com.example.androidappdev.data.`object`
 import java.util.UUID
 
 data class Employee(
-    var id: UUID,
-    var firstName: String,
-    var surname: String,
-)  {
-    override fun toString(): String = "Employee ID: $id \nEmployee Name: $firstName $surname"
+        var id: UUID,
+        var firstName: String,
+        var surname: String,
+) {
+    override fun toString(): String =
+        "Employee ID: $id \nEmployee Name: $firstName $surname"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

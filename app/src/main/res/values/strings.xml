@@ -6,8 +6,11 @@
     //buttons
     <string name="add">Add</string>
     <string name="edit">Edit</string>
+    <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="close">Close</string>
+    <string name="no_selection">Please select an item from the list</string>
+
 
     //Team
     <string name="team_button">Team</string>
@@ -18,7 +21,6 @@
 
     // Employee
     <string name="employee_button">Employee</string>
-    <string name="no_selection">Please select an item from the list</string>
     <string name="add_employee_button">Add Employee</string>
     <string name="first_name_hint">First Name</string>
     <string name="first_name_error_message">First Name is blank</string>

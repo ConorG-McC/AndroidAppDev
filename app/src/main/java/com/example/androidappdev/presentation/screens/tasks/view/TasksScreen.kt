@@ -57,10 +57,21 @@ fun TasksScreen(
 
             LazyColumnWithSelection(vm, onIndexChange)
 
+            CustomButton(stringResource(R.string.edit), clickButton = {
+                if (vm.selectedTaskIndex == -1) {
+                    (Toast.makeText(context,
+                                    R.string.no_selection,
+                                    Toast.LENGTH_SHORT
+                    )).show()
+                } else {
+                    navController.navigate("EditTask")
+                }
+            })
+
             CustomButton(stringResource(R.string.delete), clickButton = {
                 if (vm.selectedTaskIndex == -1) {
                     (Toast.makeText(
-                        context, "No employee selected", Toast.LENGTH_SHORT
+                        context, R.string.no_selection, Toast.LENGTH_SHORT
                     )).show()
                 } else {
                     vm.deleteTask()

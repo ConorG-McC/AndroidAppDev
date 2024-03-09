@@ -64,7 +64,7 @@ fun EmployeeScreen(
             CustomButton(stringResource(R.string.edit), clickButton = {
                 if (vm.selectedEmployeeIndex == -1) {
                     (Toast.makeText(context,
-                                    "No employee selected",
+                                    R.string.no_selection,
                                     Toast.LENGTH_SHORT
                     )).show()
                 } else {
@@ -74,7 +74,7 @@ fun EmployeeScreen(
             CustomButton(stringResource(R.string.delete), clickButton = {
                 if (vm.selectedEmployeeIndex == -1) {
                     (Toast.makeText(context,
-                                    "No employee selected",
+                                    R.string.no_selection,
                                     Toast.LENGTH_SHORT
                     )).show()
                 } else {

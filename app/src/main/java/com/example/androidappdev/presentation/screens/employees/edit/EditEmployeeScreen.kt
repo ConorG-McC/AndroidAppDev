@@ -18,11 +18,11 @@ import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
 fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmployeeViewModel.Factory),
-                       selectedContactIndex: Int,
+                       selectedEmployeeIndex: Int,
                        onClickToHome: () -> Unit
 ) {
 
-    vm.getEmployees(selectedContactIndex) //called each time component is updated
+    vm.getEmployees(selectedEmployeeIndex) //called each time component is updated
 
     Column(modifier = Modifier.fillMaxSize()
     ) {
@@ -49,7 +49,7 @@ fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmplo
                             vm.surnameIsValid()
             )
 
-            CustomButton(stringResource(R.string.edit), clickButton = {
+            CustomButton(stringResource(R.string.save), clickButton = {
                 vm.updateEmployee()
                 onClickToHome()
             })

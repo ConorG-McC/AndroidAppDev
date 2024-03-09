@@ -1,7 +1,7 @@
 package com.example.androidappdev.data.repositories
 
 import android.util.Log
-import com.example.androidappdev.data.`object`.Employee
+import com.example.androidappdev.data.entities.Employee
 
 class EmployeeInMemoryRepository(private val employeeRepository: MutableList<Employee>) {
 

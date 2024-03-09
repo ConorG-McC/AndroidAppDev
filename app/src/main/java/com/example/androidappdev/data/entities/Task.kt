@@ -1,4 +1,4 @@
-package com.example.androidappdev.data.`object`
+package com.example.androidappdev.data.entities
 
 import java.util.UUID
 

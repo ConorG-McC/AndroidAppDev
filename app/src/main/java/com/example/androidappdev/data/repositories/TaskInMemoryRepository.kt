@@ -1,7 +1,7 @@
 package com.example.androidappdev.data.repositories
 
 import android.util.Log
-import com.example.androidappdev.data.`object`.Task
+import com.example.androidappdev.data.entities.Task
 
 class TaskInMemoryRepository(private val taskRepository: MutableList<Task>) {
 

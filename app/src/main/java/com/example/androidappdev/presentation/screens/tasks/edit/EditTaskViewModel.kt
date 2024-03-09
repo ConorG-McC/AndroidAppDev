@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.`object`.Task
+import com.example.androidappdev.data.entities.Task
 import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 
 class EditTaskViewModel(private val repo: TaskInMemoryRepository) :

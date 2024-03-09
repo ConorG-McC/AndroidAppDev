@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.`object`.Employee
+import com.example.androidappdev.data.entities.Employee
 import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 
 class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) :

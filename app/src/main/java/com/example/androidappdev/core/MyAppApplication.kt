@@ -1,8 +1,8 @@
 package com.example.androidappdev.core
 
 import android.app.Application
-import com.example.androidappdev.data.`object`.Employee
-import com.example.androidappdev.data.`object`.Task
+import com.example.androidappdev.data.entities.Employee
+import com.example.androidappdev.data.entities.Task
 import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
 import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 import java.util.UUID

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.`object`.Task
+import com.example.androidappdev.data.entities.Task
 import com.example.androidappdev.data.repositories.TaskInMemoryRepository
 
 class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
@@ -31,8 +31,7 @@ class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                TaskViewModel(
-                    repo = MyAppApplication.taskInMemoryRepository
+                TaskViewModel(repo = MyAppApplication.taskInMemoryRepository
                 )
             }
         }

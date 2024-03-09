@@ -20,6 +20,7 @@ import com.example.androidappdev.presentation.screens.employees.view.EmployeeScr
 import com.example.androidappdev.presentation.screens.home.HomeScreen
 import com.example.androidappdev.presentation.screens.login.LoginScreen
 import com.example.androidappdev.presentation.screens.tasks.add.AddTaskScreen
+import com.example.androidappdev.presentation.screens.tasks.edit.EditTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.view.TasksScreen
 import com.example.androidappdev.presentation.screens.team.add.AddTeamScreen
 import com.example.androidappdev.presentation.screens.team.view.TeamScreen
@@ -34,6 +35,7 @@ open class NavScreen(var icon: Int, var route: String) {
     data object AddEmployee : NavScreen(R.drawable.employees, "AddEmployee")
     data object EditEmployee : NavScreen(R.drawable.employees, "EditEmployee")
     data object Tasks : NavScreen(R.drawable.tasks, "Tasks")
+    data object EditTask : NavScreen(R.drawable.tasks, "EditTask")
     data object AddTask : NavScreen(R.drawable.tasks, "AddTask")
     data object Exit : NavScreen(R.drawable.logout, "Logout")
 }
@@ -89,7 +91,7 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.EditEmployee.route) {
-            EditEmployeeScreen(selectedContactIndex = selectedEmployeeIndex,
+            EditEmployeeScreen(selectedEmployeeIndex = selectedEmployeeIndex,
                                onClickToHome = {
                                    if (selectedEmployeeIndex != -1) navController.navigate(
                                        "Employees"
@@ -106,6 +108,14 @@ fun NavigationGraph(navController: NavHostController,
                         text = stringResource(R.string.tasks_button),
                         navController = navController
             )
+        }
+        composable(NavScreen.EditTask.route) {
+            EditTaskScreen(selectedTaskIndex = selectedTaskIndex,
+                           onClickToHome = {
+                               if (selectedTaskIndex != -1) navController.navigate(
+                                   "Tasks"
+                               )
+                           })
         }
         composable(NavScreen.AddTask.route) {
             AddTaskScreen(stringResource(R.string.add_task_button),

@@ -3,7 +3,7 @@ package com.example.androidappdev.data.repositories
 import android.util.Log
 import com.example.androidappdev.data.entities.Task
 
-class TaskInMemoryRepository(private val taskRepository: MutableList<Task>) {
+class TaskRepository(private val taskRepository: MutableList<Task>) {
 
     fun getAllTasks(): MutableList<Task> {
         Log.v("InMemoryRepository.getAllEmployee TEST",

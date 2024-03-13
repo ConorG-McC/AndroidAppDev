@@ -8,9 +8,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Task
-import com.example.androidappdev.data.repositories.TaskInMemoryRepository
+import com.example.androidappdev.data.repositories.TaskRepository
 
-class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
+class TaskViewModel(private val repo: TaskRepository) : ViewModel() {
     val items = mutableStateListOf<Task>()//No live data in this example
     var selectedTaskIndex: Int = -1
 
@@ -31,7 +31,7 @@ class TaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                TaskViewModel(repo = MyAppApplication.taskInMemoryRepository
+                TaskViewModel(repo = MyAppApplication.taskRepository
                 )
             }
         }

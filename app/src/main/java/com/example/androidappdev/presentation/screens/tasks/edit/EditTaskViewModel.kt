@@ -10,10 +10,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Task
-import com.example.androidappdev.data.repositories.TaskInMemoryRepository
+import com.example.androidappdev.data.repositories.TaskRepository
 
-class EditTaskViewModel(private val repo: TaskInMemoryRepository) :
-    ViewModel() {
+class EditTaskViewModel(private val repo: TaskRepository) : ViewModel() {
     private var selectedTask: Task? = null
 
     var title by mutableStateOf("")
@@ -45,7 +44,7 @@ class EditTaskViewModel(private val repo: TaskInMemoryRepository) :
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EditTaskViewModel(repo = MyAppApplication.taskInMemoryRepository
+                EditTaskViewModel(repo = MyAppApplication.taskRepository
                 )
             }
         }

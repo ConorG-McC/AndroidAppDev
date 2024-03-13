@@ -9,10 +9,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Task
-import com.example.androidappdev.data.repositories.TaskInMemoryRepository
+import com.example.androidappdev.data.enums.TaskStatus
+import com.example.androidappdev.data.repositories.TaskRepository
 import java.util.UUID
 
-class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
+class AddTaskViewModel(private val repo: TaskRepository) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
     fun onTitleChange(title: String) {
@@ -25,15 +26,23 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
         _description.value = description
     }
 
+    private var _status = MutableLiveData(TaskStatus.TODO)
+    val status: LiveData<TaskStatus> = _status
+    fun onStatusChange(status: TaskStatus) {
+        _status.value = status
+    }
+
     private fun allDataIsValid(): Boolean {
-        return _title.value!!.isNotBlank() && _description.value!!.isNotBlank()
+        return _title.value!!.isNotBlank() && _description.value!!.isNotBlank() && _status.value != null
     }
 
     fun add() {
         if (allDataIsValid()) {
-            val newTask = Task(UUID.randomUUID(),
-                               _title.value.toString(),
-                               _description.value.toString()
+            val newTask = Task(
+                UUID.randomUUID(),
+                _title.value.toString(),
+                _description.value.toString(),
+                _status.value!!,
             )
             Log.d("NEW TASK TO ADD", newTask.toString())
             repo.addTask(newTask)
@@ -46,12 +55,13 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     private fun clear() {
         _title.value = String()
         _description.value = String()
+        _status.value = TaskStatus.TODO
     }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddTaskViewModel(repo = MyAppApplication.taskInMemoryRepository
+                AddTaskViewModel(repo = MyAppApplication.taskRepository
                 )
             }
         }

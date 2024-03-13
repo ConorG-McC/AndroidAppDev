@@ -9,11 +9,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
+import com.example.androidappdev.data.repositories.EmployeeRepository
 import java.util.UUID
 
-class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
-    ViewModel() {
+class AddEmployeeViewModel(private val repo: EmployeeRepository) : ViewModel() {
 
     private var _firstName = MutableLiveData(String())
     val firstName: LiveData<String> = _firstName
@@ -27,6 +26,8 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
         _surname.value = description
     }
 
+    private var _teamID = MutableLiveData<UUID?>()
+    val teamID: MutableLiveData<UUID?> = _teamID
     private fun allDataIsValid(): Boolean {
         return _firstName.value!!.isNotBlank() && _surname.value!!.isNotBlank()
     }
@@ -35,7 +36,9 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
         if (allDataIsValid()) {
             val newEmployee = Employee(UUID.randomUUID(),
                                        _firstName.value.toString(),
-                                       _surname.value.toString()
+                                       _surname.value.toString(),
+                                       teamId = null,
+                                       tasks = emptyList()
             )
             Log.d("NEW EMPLOYEE TO ADD", newEmployee.toString())
             repo.addEmployee(newEmployee)
@@ -50,13 +53,14 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
     private fun clear() {
         _firstName.value = String()
         _surname.value = String()
+        _teamID.value = null
     }
 
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddEmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
+                AddEmployeeViewModel(repo = MyAppApplication.employeeRepository
                 )
             }
         }

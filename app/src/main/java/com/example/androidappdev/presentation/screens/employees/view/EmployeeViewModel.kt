@@ -8,10 +8,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
+import com.example.androidappdev.data.repositories.EmployeeRepository
 
-class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
-    ViewModel() {
+class EmployeeViewModel(private val repo: EmployeeRepository) : ViewModel() {
     val items = mutableStateListOf<Employee>()//No live data in this example
     var selectedEmployeeIndex: Int = -1
 
@@ -32,7 +31,7 @@ class EmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
+                EmployeeViewModel(repo = MyAppApplication.employeeRepository
                 )
             }
         }

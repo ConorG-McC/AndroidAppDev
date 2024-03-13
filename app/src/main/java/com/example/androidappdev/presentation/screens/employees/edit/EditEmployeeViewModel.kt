@@ -10,9 +10,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
+import com.example.androidappdev.data.repositories.EmployeeRepository
 
-class EditEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
+class EditEmployeeViewModel(private val repo: EmployeeRepository) :
     ViewModel() {
     private var selectedEmployee: Employee? = null
 
@@ -45,7 +45,7 @@ class EditEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EditEmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
+                EditEmployeeViewModel(repo = MyAppApplication.employeeRepository
                 )
             }
         }

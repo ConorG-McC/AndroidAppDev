@@ -37,9 +37,9 @@ class MyAppApplication : Application() {
 
     private fun initTaskRepository() {
         taskInMemoryRepository = TaskInMemoryRepository(ArrayList()).apply {
-            addTask(Task(UUID.randomUUID(), "Task1", "Description1"))
-            addTask(Task(UUID.randomUUID(), "Task2", "Description2"))
-            addTask(Task(UUID.randomUUID(), "Task3", "Description3"))
+            addTask(Task("Task1", "Description1"))
+            addTask(Task("Task2", "Description2"))
+            addTask(Task( "Task3", "Description3"))
         }
 
     }

@@ -1,6 +1,6 @@
 package com.example.androidappdev.data.employee
 
-import com.example.navigationwithviewmodel1.data.DatabaseResult
+import com.example.androidappdev.data.database.DatabaseResult
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

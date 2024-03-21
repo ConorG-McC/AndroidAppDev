@@ -9,11 +9,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.task.Task
-import com.example.androidappdev.data.task.TaskStatus
 import com.example.androidappdev.data.task.TaskRepo
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import java.util.UUID
+import com.example.androidappdev.data.task.TaskStatus
 
 class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
     private var _title = MutableLiveData(String())

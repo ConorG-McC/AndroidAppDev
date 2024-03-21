@@ -9,8 +9,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.task.Task
 import com.example.androidappdev.data.task.TaskRepo
-import com.example.navigationwithviewmodel1.data.DatabaseResult
-import com.example.navigationwithviewmodel1.data.DatabaseState
+import com.example.androidappdev.data.database.DatabaseResult
+import com.example.androidappdev.data.database.DatabaseState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

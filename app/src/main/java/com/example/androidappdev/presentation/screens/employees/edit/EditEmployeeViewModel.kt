@@ -1,6 +1,5 @@
 package com.example.androidappdev.presentation.screens.employees.edit
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,7 +10,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.employee.EmployeeRepo
-import com.example.androidappdev.data.employee.EmployeeRepository
 
 class EditEmployeeViewModel(private val repo: EmployeeRepo) :
     ViewModel() {

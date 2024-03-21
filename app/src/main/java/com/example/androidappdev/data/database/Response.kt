@@ -2,9 +2,9 @@ package com.example.androidappdev.data.database
 
 sealed class Response<out T> {
 
-    object Startup: Response<Nothing>()
+    data object Startup: Response<Nothing>()
 
-    object Loading: Response<Nothing>()
+    data object Loading: Response<Nothing>()
 
     data class Success<out T>(
         val data: T

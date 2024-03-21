@@ -10,8 +10,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.employee.EmployeeRepo
-import com.example.androidappdev.data.employee.EmployeeRepository
-import java.util.UUID
 
 class AddEmployeeViewModel(private val repo: EmployeeRepo) :
     ViewModel() {

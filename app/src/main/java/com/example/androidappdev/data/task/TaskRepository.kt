@@ -1,6 +1,6 @@
 package com.example.androidappdev.data.task
 
-import com.example.navigationwithviewmodel1.data.DatabaseResult
+import com.example.androidappdev.data.database.DatabaseResult
 import com.google.android.gms.tasks.Task as DBTask
 import kotlinx.coroutines.flow.Flow
 

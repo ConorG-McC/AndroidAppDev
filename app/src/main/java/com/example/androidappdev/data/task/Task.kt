@@ -10,10 +10,4 @@ data class Task(
     override fun toString(): String =
         " Task ID: $id \n Task Title: $title \n Task Description: $description \n Task Status: $status"
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || javaClass != other.javaClass) return false
-        val task = other as Task
-        return (task.id == id)
-    }
 }

@@ -1,6 +1,5 @@
 package com.example.androidappdev.presentation.screens.employees.view
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,9 +9,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.employee.EmployeeRepo
-import com.example.androidappdev.data.task.Task
-import com.example.navigationwithviewmodel1.data.DatabaseResult
-import com.example.navigationwithviewmodel1.data.DatabaseState
+import com.example.androidappdev.data.database.DatabaseResult
+import com.example.androidappdev.data.database.DatabaseState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

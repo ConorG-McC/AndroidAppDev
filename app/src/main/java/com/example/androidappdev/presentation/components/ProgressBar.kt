@@ -1,4 +1,4 @@
-package com.example.navigationwithviewmodel1.presentation.components
+package com.example.androidappdev.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

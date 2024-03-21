@@ -1,8 +1,6 @@
 package com.example.androidappdev.data.employee
 
-import android.util.Log
-import com.example.androidappdev.data.employee.Employee
-import com.example.navigationwithviewmodel1.data.DatabaseResult
+import com.example.androidappdev.data.database.DatabaseResult
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 

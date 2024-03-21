@@ -1,4 +1,4 @@
-package com.example.navigationwithviewmodel1.data
+package com.example.androidappdev.data.database
 
 data class DatabaseState<T>(
     val data: List<T?> = emptyList(),

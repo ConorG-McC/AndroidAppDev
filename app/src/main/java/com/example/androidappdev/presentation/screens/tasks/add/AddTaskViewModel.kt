@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.entities.Task
-import com.example.androidappdev.data.enums.TaskStatus
-import com.example.androidappdev.data.repositories.TaskInMemoryRepository
+import com.example.androidappdev.data.task.Task
+import com.example.androidappdev.data.task.TaskStatus
+import com.example.androidappdev.data.task.TaskRepo
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.UUID
 
-class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
+class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
     fun onTitleChange(title: String) {
@@ -46,17 +46,8 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
             )
             Log.d("NEW TASK TO ADD", newTask.toString())
             repo.addTask(newTask)
-            saveRecord(newTask)
             clear()
-            Log.d("NEW TASK ADDED TO REPO", repo.getAllTasks().size.toString())
-
         }
-    }
-
-    private fun saveRecord(newTask: Task) {
-        val firebase: FirebaseDatabase = FirebaseDatabase.getInstance("https://androidapplicationmodule-default-rtdb.europe-west1.firebasedatabase.app/")
-        val database : DatabaseReference = firebase.getReference("tasks")
-        database.child(UUID.randomUUID().toString()).setValue(newTask)
     }
 
     private fun clear() {
@@ -68,7 +59,7 @@ class AddTaskViewModel(private val repo: TaskInMemoryRepository) : ViewModel() {
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddTaskViewModel(repo = MyAppApplication.taskInMemoryRepository
+                AddTaskViewModel(repo = MyAppApplication.container.taskRepository
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.example.androidappdev.data.entities
+package com.example.androidappdev.data.team
 
 import java.util.UUID
 

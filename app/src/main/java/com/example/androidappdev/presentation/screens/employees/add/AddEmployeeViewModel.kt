@@ -8,11 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeInMemoryRepository
+import com.example.androidappdev.data.employee.Employee
+import com.example.androidappdev.data.employee.EmployeeRepo
+import com.example.androidappdev.data.employee.EmployeeRepository
 import java.util.UUID
 
-class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
+class AddEmployeeViewModel(private val repo: EmployeeRepo) :
     ViewModel() {
 
     private var _firstName = MutableLiveData(String())
@@ -33,17 +34,13 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
 
     fun add() {
         if (allDataIsValid()) {
-            val newEmployee = Employee(UUID.randomUUID(),
-                                       _firstName.value.toString(),
-                                       _surname.value.toString()
+            val newEmployee = Employee(
+                _firstName.value.toString(),
+                _surname.value.toString()
             )
             Log.d("NEW EMPLOYEE TO ADD", newEmployee.toString())
             repo.addEmployee(newEmployee)
             clear()
-            Log.d("NEW EMPLOYEE ADDED TO REPO",
-                  repo.getAllEmployee().size.toString()
-            )
-
         }
     }
 
@@ -52,11 +49,11 @@ class AddEmployeeViewModel(private val repo: EmployeeInMemoryRepository) :
         _surname.value = String()
     }
 
-    // Define ViewModel factory in a companion object
+//     Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddEmployeeViewModel(repo = MyAppApplication.employeeInMemoryRepository
+                AddEmployeeViewModel(repo = MyAppApplication.container.employeeRepository
                 )
             }
         }

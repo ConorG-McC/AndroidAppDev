@@ -1,12 +1,12 @@
-package com.example.androidappdev.data.entities
+package com.example.androidappdev.data.employee
 
 import java.util.UUID
 
 data class Employee(
-        var id: UUID,
-        var firstName: String,
-        var surname: String,
+        var firstName: String? = null,
+        var surname: String? = null
 ) {
+    var id: String? = null
     override fun toString(): String =
         "Employee ID: $id \nEmployee Name: $firstName $surname"
 

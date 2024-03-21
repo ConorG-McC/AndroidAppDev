@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,16 +14,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidappdev.R
+import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
 fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmployeeViewModel.Factory),
-                       selectedEmployeeIndex: Int,
+                       selectedEmployee: Employee,
                        onClickToHome: () -> Unit
 ) {
-
-    vm.getEmployees(selectedEmployeeIndex) //called each time component is updated
+    LaunchedEffect(key1 = Unit) {//Called on launch
+        vm.setSelectedEmployee(selectedEmployee)
+    }
 
     Column(modifier = Modifier.fillMaxSize()
     ) {

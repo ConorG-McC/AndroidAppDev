@@ -3,10 +3,6 @@ package com.example.androidappdev.presentation.navigation
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -14,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.androidappdev.R
+import com.example.androidappdev.data.employee.Employee
+import com.example.androidappdev.data.task.Task
 import com.example.androidappdev.presentation.screens.employees.add.AddEmployeeScreen
 import com.example.androidappdev.presentation.screens.employees.edit.EditEmployeeScreen
 import com.example.androidappdev.presentation.screens.employees.view.EmployeeScreen
@@ -46,8 +44,9 @@ fun NavigationGraph(navController: NavHostController,
                     simulateLogin: () -> Unit,
                     modifier: Modifier = Modifier.testTag("TestNavGraph")
 ) {
-    var selectedEmployeeIndex by remember { mutableIntStateOf(-1) }
-    var selectedTaskIndex by remember { mutableIntStateOf(-1) }
+    var selectedTask: Task? = null
+    var selectedEmployee: Employee? = null
+
 
     NavHost(navController, startDestination = NavScreen.Login.route
     ) {
@@ -78,7 +77,7 @@ fun NavigationGraph(navController: NavHostController,
                            context = context,
                            onIndexChange = {
                                Log.v("OK", "index change event called")
-                               selectedEmployeeIndex = it
+                               selectedEmployee = it
                            },
                            text = stringResource(R.string.employee_button),
                            navController = navController
@@ -91,9 +90,9 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.EditEmployee.route) {
-            EditEmployeeScreen(selectedEmployeeIndex = selectedEmployeeIndex,
+            EditEmployeeScreen(selectedEmployee = selectedEmployee!!,
                                onClickToHome = {
-                                   if (selectedEmployeeIndex != -1) navController.navigate(
+                                   if (selectedEmployee != null) navController.navigate(
                                        "Employees"
                                    )
                                })
@@ -103,19 +102,20 @@ fun NavigationGraph(navController: NavHostController,
                         context = context,
                         onIndexChange = {
                             Log.v("OK", "index change event called")
-                            selectedTaskIndex = it
+                            selectedTask = it
                         },
                         text = stringResource(R.string.tasks_button),
                         navController = navController
             )
         }
         composable(NavScreen.EditTask.route) {
-            EditTaskScreen(selectedTaskIndex = selectedTaskIndex,
+            EditTaskScreen(selectedTask=selectedTask!!,
                            onClickToHome = {
-                               if (selectedTaskIndex != -1) navController.navigate(
+                               if(selectedTask!=null){
+                                   navController.navigate(
                                    "Tasks"
                                )
-                           })
+                           }})
         }
         composable(NavScreen.AddTask.route) {
             AddTaskScreen(stringResource(R.string.add_task_button),

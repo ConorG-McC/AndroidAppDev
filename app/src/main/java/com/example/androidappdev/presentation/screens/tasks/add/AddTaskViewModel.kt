@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.entities.Task
-import com.example.androidappdev.data.enums.TaskStatus
-import com.example.androidappdev.data.repositories.TaskRepository
-import java.util.UUID
+import com.example.androidappdev.data.task.Task
+import com.example.androidappdev.data.task.TaskRepo
+import com.example.androidappdev.data.task.TaskStatus
 
-class AddTaskViewModel(private val repo: TaskRepository) : ViewModel() {
+class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
     fun onTitleChange(title: String) {
@@ -33,35 +32,31 @@ class AddTaskViewModel(private val repo: TaskRepository) : ViewModel() {
     }
 
     private fun allDataIsValid(): Boolean {
-        return _title.value!!.isNotBlank() && _description.value!!.isNotBlank() && _status.value != null
+        return _title.value!!.isNotBlank() && _description.value!!.isNotBlank()
     }
 
     fun add() {
         if (allDataIsValid()) {
-            val newTask = Task(
-                UUID.randomUUID(),
-                _title.value.toString(),
-                _description.value.toString(),
-                _status.value!!,
+            val newTask = Task(_title.value.toString(),
+                               _description.value.toString(),
+                                 _status.value!!
             )
             Log.d("NEW TASK TO ADD", newTask.toString())
             repo.addTask(newTask)
             clear()
-            Log.d("NEW TASK ADDED TO REPO", repo.getAllTasks().size.toString())
-
         }
     }
 
     private fun clear() {
         _title.value = String()
         _description.value = String()
-        _status.value = TaskStatus.TODO
     }
+
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddTaskViewModel(repo = MyAppApplication.taskRepository
+                AddTaskViewModel(repo = MyAppApplication.container.taskRepository
                 )
             }
         }

@@ -32,16 +32,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidappdev.R
-import com.example.androidappdev.data.enums.TaskStatus
+import com.example.androidappdev.data.task.TaskStatus
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
 @Composable
 fun AddTaskScreen(
-        text: String,
-        modifier: Modifier = Modifier,
-        navController: NavHostController,
-        vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
+    text: String,
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
 ) {
     val title: String by vm.title.observeAsState("")
     val description: String by vm.description.observeAsState("")
@@ -62,16 +62,16 @@ fun AddTaskScreen(
         )
         Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             CustomTextField(stringResource(R.string.title_hint),
-                            text = title,
-                            onNameChange = { vm.onTitleChange(it) },
-                            stringResource(R.string.title_error_message),
-                            !vm.title.value.isNullOrBlank()
+                text = title,
+                onNameChange = { vm.onTitleChange(it) },
+                stringResource(R.string.title_error_message),
+                !vm.title.value.isNullOrBlank()
             )
             CustomTextField(stringResource(R.string.description_hint),
-                            text = description,
-                            onNameChange = { vm.onDescriptionChange(it) },
-                            stringResource(R.string.description_error_message),
-                            !vm.description.value.isNullOrBlank()
+                text = description,
+                onNameChange = { vm.onDescriptionChange(it) },
+                stringResource(R.string.description_error_message),
+                !vm.description.value.isNullOrBlank()
             )
 
 
@@ -94,7 +94,7 @@ fun AddTaskScreen(
                 )
                 ) {
                     DropdownMenu(expanded,
-                                 onDismissRequest = { expanded = false }) {
+                        onDismissRequest = { expanded = false }) {
                         taskStatusList.forEach { status ->
                             DropdownMenuItem(
                                 text = {
@@ -127,7 +127,7 @@ fun AddTaskScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CustomButton(stringResource(R.string.close),
-                             clickButton = { navController.navigate("Tasks") })
+                    clickButton = { navController.navigate("Tasks") })
             }
         }
 

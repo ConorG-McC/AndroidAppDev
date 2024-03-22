@@ -1,6 +1,5 @@
 package com.example.androidappdev.presentation.screens.employees.edit
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,15 +8,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeRepository
+import com.example.androidappdev.data.employee.Employee
+import com.example.androidappdev.data.employee.EmployeeRepo
 
-class EditEmployeeViewModel(private val repo: EmployeeRepository) :
+class EditEmployeeViewModel(private val repo: EmployeeRepo) :
     ViewModel() {
     private var selectedEmployee: Employee? = null
 
+    var id by mutableStateOf("")
     var firstName by mutableStateOf("")
     var surname by mutableStateOf("")
+
+    fun setSelectedEmployee(employee: Employee){
+        id = employee.id.toString()
+        firstName = employee.firstName.toString()
+        surname = employee.surname.toString()
+        selectedEmployee = employee
+    }
     fun firstNameIsValid(): Boolean {
         return firstName.isNotBlank()
     }
@@ -26,26 +33,17 @@ class EditEmployeeViewModel(private val repo: EmployeeRepository) :
         return surname.isNotBlank()
     }
 
-    fun getEmployees(selectedIndex: Int) {//Display when screen loads
-        if (selectedEmployee == null) {
-            selectedEmployee = repo.getAllEmployee()[selectedIndex]
-            Log.v("OK", selectedEmployee!!.toString())
-            firstName = selectedEmployee!!.firstName
-            surname = selectedEmployee!!.surname
-        }
-    }
-
     fun updateEmployee() {
         selectedEmployee!!.firstName = firstName
         selectedEmployee!!.surname = surname
-        repo.edit(selectedEmployee!!)
+        repo.editEmployee(selectedEmployee!!)
     }
 
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EditEmployeeViewModel(repo = MyAppApplication.employeeRepository
+                EditEmployeeViewModel(repo = MyAppApplication.container.employeeRepository
                 )
             }
         }

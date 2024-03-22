@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
-import com.example.androidappdev.data.entities.Employee
-import com.example.androidappdev.data.repositories.EmployeeRepository
-import java.util.UUID
+import com.example.androidappdev.data.employee.Employee
+import com.example.androidappdev.data.employee.EmployeeRepo
 
-class AddEmployeeViewModel(private val repo: EmployeeRepository) : ViewModel() {
+class AddEmployeeViewModel(private val repo: EmployeeRepo) :
+    ViewModel() {
 
     private var _firstName = MutableLiveData(String())
     val firstName: LiveData<String> = _firstName
@@ -26,41 +26,32 @@ class AddEmployeeViewModel(private val repo: EmployeeRepository) : ViewModel() {
         _surname.value = description
     }
 
-    private var _teamID = MutableLiveData<UUID?>()
-    val teamID: MutableLiveData<UUID?> = _teamID
     private fun allDataIsValid(): Boolean {
         return _firstName.value!!.isNotBlank() && _surname.value!!.isNotBlank()
     }
 
     fun add() {
         if (allDataIsValid()) {
-            val newEmployee = Employee(UUID.randomUUID(),
-                                       _firstName.value.toString(),
-                                       _surname.value.toString(),
-                                       teamId = null,
-                                       tasks = emptyList()
+            val newEmployee = Employee(
+                _firstName.value.toString(),
+                _surname.value.toString()
             )
             Log.d("NEW EMPLOYEE TO ADD", newEmployee.toString())
             repo.addEmployee(newEmployee)
             clear()
-            Log.d("NEW EMPLOYEE ADDED TO REPO",
-                  repo.getAllEmployee().size.toString()
-            )
-
         }
     }
 
     private fun clear() {
         _firstName.value = String()
         _surname.value = String()
-        _teamID.value = null
     }
 
-    // Define ViewModel factory in a companion object
+//     Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddEmployeeViewModel(repo = MyAppApplication.employeeRepository
+                AddEmployeeViewModel(repo = MyAppApplication.container.employeeRepository
                 )
             }
         }

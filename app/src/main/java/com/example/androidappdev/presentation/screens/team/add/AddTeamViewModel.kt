@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androidappdev.data.entities.Team
+import com.example.androidappdev.data.team.Team
 import java.util.UUID
 
 class AddTeamViewModel : ViewModel() {

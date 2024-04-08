@@ -16,8 +16,7 @@ import com.example.androidappdev.R
 import com.example.androidappdev.presentation.navigation.NavScreen
 
 @Composable
-fun BottomNavBar(navController: NavController, enabled: Boolean) {
-    val itemsList = createListOfItems(enabled)
+fun BottomNavBar(navController: NavController) {
 
     BottomNavigation(backgroundColor = colorResource(id = R.color.white),
                      contentColor = Color.Black
@@ -25,7 +24,7 @@ fun BottomNavBar(navController: NavController, enabled: Boolean) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        itemsList.forEach { item ->
+        createListOfItems().forEach { item ->
             BottomNavigationItem(
 
                 icon = {
@@ -56,16 +55,11 @@ fun BottomNavBar(navController: NavController, enabled: Boolean) {
 }
 
 @Composable
-private fun createListOfItems(enabled: Boolean): List<NavScreen> {
-    return if (enabled) {
-        listOf(NavScreen.Home,
-               NavScreen.Team,
-               NavScreen.Employees,
-               NavScreen.Tasks,
-               NavScreen.Exit
-        )
-    } else {
-        listOf(NavScreen.Exit
-        )
-    }
+private fun createListOfItems(): List<NavScreen> {
+    return listOf(NavScreen.Home,
+                  NavScreen.Team,
+                  NavScreen.Employees,
+                  NavScreen.Tasks,
+                  NavScreen.Exit
+    )
 }

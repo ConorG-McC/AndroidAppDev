@@ -1,6 +1,6 @@
 package com.example.androidappdev.presentation.screens.tasks.view
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,69 +32,74 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.androidappdev.R
 import com.example.androidappdev.data.task.Task
+import com.example.androidappdev.presentation.components.BottomNavBar
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.FloatingButton
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TasksScreen(
-    modifier: Modifier = Modifier,
-    vm: TaskViewModel = viewModel(factory = TaskViewModel.Factory),
-    context: Context,
-    onIndexChange: (Task?) -> Unit,
-    text: String,
-    navController: NavController,
+        modifier: Modifier = Modifier,
+        vm: TaskViewModel = viewModel(factory = TaskViewModel.Factory),
+        onIndexChange: (Task?) -> Unit,
+        text: String,
+        navController: NavController,
 ) {
     val context = LocalContext.current
     val onClickToAddTask = { navController.navigate("AddTask") }
 
-    Box(modifier = modifier) {
-        Column(
-            modifier = modifier
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = text,
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-            )
-            val userState by vm.userState.collectAsState()
-            if (userState.data.isNotEmpty())
-                LazyColumnWithSelection(vm, onIndexChange)
+    Scaffold(modifier = modifier,
+             bottomBar = { BottomNavBar(navController = navController) }) {
+        Box(modifier = modifier) {
+            Column(modifier = modifier
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                )
+                val userState by vm.userState.collectAsState()
+                if (userState.data.isNotEmpty()) LazyColumnWithSelection(vm,
+                                                                         onIndexChange
+                )
 
-            CustomButton(stringResource(R.string.edit), clickButton = {
-                if (!vm.taskHasBeenSelected()) {
-                    (Toast.makeText(context,
-                                    R.string.no_selection,
-                                    Toast.LENGTH_SHORT
-                    )).show()
-                } else {
-                    navController.navigate("EditTask")
-                }
-            })
+                CustomButton(stringResource(R.string.edit), clickButton = {
+                    if (!vm.taskHasBeenSelected()) {
+                        (Toast.makeText(context,
+                                        R.string.no_selection,
+                                        Toast.LENGTH_SHORT
+                        )).show()
+                    } else {
+                        navController.navigate("EditTask")
+                    }
+                })
 
-            CustomButton(stringResource(R.string.delete), clickButton = {
-                if (!vm.taskHasBeenSelected()) {
-                    (Toast.makeText(
-                        context, R.string.no_selection, Toast.LENGTH_SHORT
-                    )).show()
-                } else {
-                    vm.deleteTask()
-                }
-            })
+                CustomButton(stringResource(R.string.delete), clickButton = {
+                    if (!vm.taskHasBeenSelected()) {
+                        (Toast.makeText(context,
+                                        R.string.no_selection,
+                                        Toast.LENGTH_SHORT
+                        )).show()
+                    } else {
+                        vm.deleteTask()
+                    }
+                })
+            }
         }
-    }
 
-    FloatingButton(
-        "woop", clickAction = onClickToAddTask, modifier = modifier
-    )
+        FloatingButton("woop",
+                       clickAction = onClickToAddTask,
+                       modifier = modifier
+        )
+    }
 }
 
 
 @Composable
-fun LazyColumnWithSelection(vm: TaskViewModel,
-                            onIndexChange: (Task) -> Unit) {
+fun LazyColumnWithSelection(vm: TaskViewModel, onIndexChange: (Task) -> Unit) {
 
     var selectedIndexToHighlight by remember { mutableStateOf(-1) }
 
@@ -101,21 +107,20 @@ fun LazyColumnWithSelection(vm: TaskViewModel,
     LazyColumn(modifier = Modifier.padding(vertical = 20.dp)) {
         itemsIndexed(vm.userState.value.data) { index, item ->
             ItemView(index = index,
-                item = item.toString(),
-                selected = selectedIndexToHighlight == index,
-                onClick = { index: Int ->
-                    selectedIndexToHighlight =
-                        index //local state for highlighting selected item
-                    onIndexChange(item!!)
-                    vm.selectedTask = item
-                })
+                     item = item.toString(),
+                     selected = selectedIndexToHighlight == index,
+                     onClick = { index: Int ->
+                         selectedIndexToHighlight =
+                             index //local state for highlighting selected item
+                         onIndexChange(item!!)
+                         vm.selectedTask = item
+                     })
         }
     }
 }
 
 @Composable
-fun ItemView(
-    index: Int, item: String, selected: Boolean, onClick: (Int) -> Unit
+fun ItemView(index: Int, item: String, selected: Boolean, onClick: (Int) -> Unit
 ) {
     Text(text = item, modifier = Modifier
         .clickable {

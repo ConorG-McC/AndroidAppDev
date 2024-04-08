@@ -40,6 +40,7 @@ fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmplo
         Column {
             CustomTextField(stringResource(R.string.first_name_hint),
                             text = vm.firstName,
+                            isPassword = false,
                             onNameChange = { vm.firstName = it },
                             stringResource(R.string.first_name_error_message),
                             vm.firstNameIsValid()
@@ -47,6 +48,7 @@ fun EditEmployeeScreen(vm: EditEmployeeViewModel = viewModel(factory = EditEmplo
 
             CustomTextField(stringResource(R.string.surname_hint),
                             text = vm.surname,
+                            isPassword = false,
                             onNameChange = { vm.surname = it },
                             stringResource(R.string.surname_error_message),
                             vm.surnameIsValid()

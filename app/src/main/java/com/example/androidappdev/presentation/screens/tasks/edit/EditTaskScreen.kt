@@ -41,6 +41,7 @@ fun EditTaskScreen(vm: EditTaskViewModel = viewModel(factory = EditTaskViewModel
         Column {
             CustomTextField(stringResource(R.string.title_hint),
                             text = vm.title,
+                            isPassword = false,
                             onNameChange = { vm.title = it },
                             stringResource(R.string.title_error_message),
                             vm.titleIsValid()
@@ -48,6 +49,7 @@ fun EditTaskScreen(vm: EditTaskViewModel = viewModel(factory = EditTaskViewModel
 
             CustomTextField(stringResource(R.string.description_hint),
                             text = vm.description,
+                            isPassword = false,
                             onNameChange = { vm.description = it },
                             stringResource(R.string.description_error_message),
                             vm.descriptionIsValid()

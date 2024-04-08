@@ -1,6 +1,6 @@
 package com.example.androidappdev.presentation.screens.employees.view
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,72 +32,77 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.androidappdev.R
 import com.example.androidappdev.data.employee.Employee
+import com.example.androidappdev.presentation.components.BottomNavBar
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.FloatingButton
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EmployeeScreen(
-    modifier: Modifier = Modifier,
-    vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory),
-    context: Context,
-    onIndexChange: (Employee?) -> Unit,
-    text: String,
-    navController: NavController,
+        modifier: Modifier = Modifier,
+        vm: EmployeeViewModel = viewModel(factory = EmployeeViewModel.Factory),
+        onIndexChange: (Employee?) -> Unit,
+        text: String,
+        navController: NavController,
 ) {
 
     val context = LocalContext.current
     val onClickToAddEmployee = { navController.navigate("AddEmployee") }
 
+    Scaffold(modifier = modifier,
+             bottomBar = { BottomNavBar(navController = navController) }) {
+        Box(modifier = modifier) {
+            Column {
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .fillMaxWidth(),
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                )
 
-    Box(modifier = modifier) {
-        Column {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth(),
-                text = text,
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-            )
+                val userState by vm.userState.collectAsState()
+                if (userState.data.isNotEmpty()) LazyColumnWithSelection(vm,
+                                                                         onIndexChange
+                )
 
-            val userState by vm.userState.collectAsState()
-            if (userState.data.isNotEmpty())
-                LazyColumnWithSelection(vm,onIndexChange)
+                CustomButton(stringResource(R.string.edit), clickButton = {
+                    if (!vm.employeeHasBeenSelected()) {
+                        (Toast.makeText(context,
+                                        R.string.no_selection,
+                                        Toast.LENGTH_SHORT
+                        )).show()
+                    } else {
+                        navController.navigate("EditEmployee")
+                    }
+                })
+                CustomButton(stringResource(R.string.delete), clickButton = {
+                    if (!vm.employeeHasBeenSelected()) {
+                        (Toast.makeText(context,
+                                        R.string.no_selection,
+                                        Toast.LENGTH_SHORT
+                        )).show()
+                    } else {
+                        vm.deleteEmployee()
+                    }
+                })
 
-            CustomButton(stringResource(R.string.edit), clickButton = {
-                if (!vm.employeeHasBeenSelected()) {
-                    (Toast.makeText(context,
-                                    R.string.no_selection,
-                                    Toast.LENGTH_SHORT
-                    )).show()
-                } else {
-                    navController.navigate("EditEmployee")
-                }
-            })
-            CustomButton(stringResource(R.string.delete), clickButton = {
-                if (!vm.employeeHasBeenSelected()) {
-                    (Toast.makeText(context,
-                                    R.string.no_selection,
-                                    Toast.LENGTH_SHORT
-                    )).show()
-                } else {
-                    vm.deleteEmployee()
-                }
-            })
-
+            }
         }
-    }
 
-    FloatingButton("woop",
-                   clickAction = onClickToAddEmployee,
-                   modifier = modifier
-    )
+        FloatingButton("woop",
+                       clickAction = onClickToAddEmployee,
+                       modifier = modifier
+        )
+    }
 }
 
 @Composable
-fun LazyColumnWithSelection(vm: EmployeeViewModel, onIndexChange: (Employee) -> Unit
+fun LazyColumnWithSelection(vm: EmployeeViewModel,
+                            onIndexChange: (Employee) -> Unit
 ) {
     var selectedIndexToHighlight by remember { mutableStateOf(-1) }
 

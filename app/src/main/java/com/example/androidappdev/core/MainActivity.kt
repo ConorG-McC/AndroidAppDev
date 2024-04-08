@@ -3,13 +3,12 @@ package com.example.androidappdev.core
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.androidappdev.presentation.screens.OverallDisplay
+import com.example.androidappdev.presentation.navigation.NavigationGraph
 import com.example.androidappdev.presentation.theme.AndroidAppDevTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,8 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    OverallDisplay(rememberNavController(),
-                                   Modifier.fillMaxSize()
+                    NavigationGraph(rememberNavController()
                     )
                 }
             }

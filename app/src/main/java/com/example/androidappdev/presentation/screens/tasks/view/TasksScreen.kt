@@ -48,13 +48,17 @@ fun TasksScreen(
     val context = LocalContext.current
     val onClickToAddTask = { navController.navigate("AddTask") }
 
-    Scaffold(modifier = modifier,
-             bottomBar = { BottomNavBar(navController = navController) }) {
+    
+    Scaffold(bottomBar = {
+        BottomNavBar(navController = navController)
+    }, content = {
         Box(modifier = modifier) {
             Column(modifier = modifier
             ) {
                 Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .fillMaxWidth(),
                     text = text,
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
@@ -89,12 +93,11 @@ fun TasksScreen(
                 })
             }
         }
-
-        FloatingButton("woop",
-                       clickAction = onClickToAddTask,
-                       modifier = modifier
-        )
-    }
+    })
+    FloatingButton("Add new task",
+                   clickAction = onClickToAddTask,
+                   modifier = modifier
+    )
 }
 
 

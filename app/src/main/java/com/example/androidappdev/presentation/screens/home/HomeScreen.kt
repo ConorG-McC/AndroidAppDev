@@ -2,6 +2,7 @@ package com.example.androidappdev.presentation.screens.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,9 @@ fun HomeScreen(text: String,
         Column(modifier = modifier
         ) {
             Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
                 text = text,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,

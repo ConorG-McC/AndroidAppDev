@@ -92,12 +92,11 @@ fun EmployeeScreen(
 
             }
         }
-
-        FloatingButton("woop",
-                       clickAction = onClickToAddEmployee,
-                       modifier = modifier
-        )
     }
+    FloatingButton("woop",
+                   clickAction = onClickToAddEmployee,
+                   modifier = modifier
+    )
 }
 
 @Composable

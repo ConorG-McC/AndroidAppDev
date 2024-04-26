@@ -1,6 +1,5 @@
 package com.example.androidappdev.presentation.navigation
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.androidappdev.R
+import com.example.androidappdev.core.MyAppApplication
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.task.Task
 import com.example.androidappdev.presentation.screens.employees.add.AddEmployeeScreen
@@ -17,6 +17,7 @@ import com.example.androidappdev.presentation.screens.employees.edit.EditEmploye
 import com.example.androidappdev.presentation.screens.employees.view.EmployeeScreen
 import com.example.androidappdev.presentation.screens.home.HomeScreen
 import com.example.androidappdev.presentation.screens.login.LoginScreen
+import com.example.androidappdev.presentation.screens.signup.SignUpScreen
 import com.example.androidappdev.presentation.screens.tasks.add.AddTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.edit.EditTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.view.TasksScreen
@@ -26,6 +27,8 @@ import kotlin.system.exitProcess
 
 open class NavScreen(var icon: Int, var route: String) {
     data object Login : NavScreen(R.drawable.home, "Login")
+    data object SignUp : NavScreen(R.drawable.home, "SignUp")
+    data object ForgotPassword : NavScreen(R.drawable.home, "ForgotPassword")
     data object Home : NavScreen(R.drawable.home, "Home")
     data object Team : NavScreen(R.drawable.team, "Team")
     data object AddTeam : NavScreen(R.drawable.team, "AddTeam")
@@ -40,10 +43,9 @@ open class NavScreen(var icon: Int, var route: String) {
 
 @Composable
 fun NavigationGraph(navController: NavHostController,
-                    context: Context,
-                    simulateLogin: () -> Unit,
                     modifier: Modifier = Modifier.testTag("TestNavGraph")
 ) {
+
     var selectedTask: Task? = null
     var selectedEmployee: Employee? = null
 
@@ -51,17 +53,27 @@ fun NavigationGraph(navController: NavHostController,
     NavHost(navController, startDestination = NavScreen.Login.route
     ) {
         composable(NavScreen.Login.route) {
-            LoginScreen(stringResource(R.string.login_button),
-                        simulateLogin,
-                        modifier
+            LoginScreen(
+                navigateToSignUpScreen = {
+                    navController.navigate(NavScreen.SignUp.route)
+                },
+                navigateToHomeScreen = {
+                    navController.navigate(NavScreen.Home.route)
+                },
             )
         }
+        composable(NavScreen.SignUp.route) {
+            SignUpScreen(navigateBack = { navController.popBackStack() })
+
+        }
         composable(NavScreen.Home.route) {
-            HomeScreen(stringResource(R.string.home_button), context, modifier)
+            HomeScreen(stringResource(R.string.home_button),
+                       navController,
+                       modifier
+            )
         }
         composable(NavScreen.Team.route) {
             TeamScreen(stringResource(R.string.team_button),
-                       context,
                        modifier,
                        navController
             )
@@ -74,7 +86,6 @@ fun NavigationGraph(navController: NavHostController,
         }
         composable(NavScreen.Employees.route) {
             EmployeeScreen(modifier = modifier,
-                           context = context,
                            onIndexChange = {
                                Log.v("OK", "index change event called")
                                selectedEmployee = it
@@ -99,7 +110,6 @@ fun NavigationGraph(navController: NavHostController,
         }
         composable(NavScreen.Tasks.route) {
             TasksScreen(modifier = modifier,
-                        context = context,
                         onIndexChange = {
                             Log.v("OK", "index change event called")
                             selectedTask = it
@@ -109,13 +119,15 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.EditTask.route) {
-            EditTaskScreen(selectedTask=selectedTask!!,
+            EditTaskScreen(modifier,
+                           navController,
+                           selectedTask = selectedTask!!,
                            onClickToHome = {
-                               if(selectedTask!=null){
-                                   navController.navigate(
-                                   "Tasks"
-                               )
-                           }})
+                               if (selectedTask != null) {
+                                   navController.navigate("Tasks"
+                                   )
+                               }
+                           })
         }
         composable(NavScreen.AddTask.route) {
             AddTaskScreen(stringResource(R.string.add_task_button),
@@ -124,6 +136,7 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.Exit.route) {
+            MyAppApplication.container.authRepository.signOut()
             exitProcess(0)
         }
     }

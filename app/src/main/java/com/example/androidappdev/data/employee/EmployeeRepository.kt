@@ -5,26 +5,33 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.flow.Flow
 
 interface EmployeeRepo {
-    fun deleteEmployee(employee: Employee): Task<Void>
-    fun addEmployee(employee: Employee): Task<Void>
-    fun editEmployee(employee: Employee): Task<Void>
-    suspend fun getAllEmployees(): Flow<DatabaseResult<List<Employee?>>>
+    fun deleteEmployee(employee: Employee, currentUserId: String): Task<Void>
+    fun addEmployee(employee: Employee, currentUserId: String): Task<Void>
+    fun editEmployee(employee: Employee, currentUserId: String): Task<Void>
+    suspend fun getAllEmployees(currentUserId: String): Flow<DatabaseResult<List<Employee?>>>
 }
-class EmployeeRepository(private val employeeDAO: EmployeeDAO): EmployeeRepo {
 
-    override fun deleteEmployee(employee: Employee): Task<Void> {
-        return employeeDAO.delete(employee)
+class EmployeeRepository(private val employeeDAO: EmployeeDAO) : EmployeeRepo {
+
+    override fun deleteEmployee(employee: Employee,
+                                currentUserId: String
+    ): Task<Void> {
+        return employeeDAO.delete(employee, currentUserId)
     }
 
-    override fun addEmployee(employee: Employee): Task<Void> {
-        return employeeDAO.insert(employee)
+    override fun addEmployee(employee: Employee,
+                             currentUserId: String
+    ): Task<Void> {
+        return employeeDAO.insert(employee, currentUserId)
     }
 
-    override fun editEmployee(employee: Employee): Task<Void> {
-        return employeeDAO.update(employee)
+    override fun editEmployee(employee: Employee,
+                              currentUserId: String
+    ): Task<Void> {
+        return employeeDAO.update(employee, currentUserId)
     }
 
-    override suspend fun getAllEmployees(): Flow<DatabaseResult<List<Employee?>>> {
-        return employeeDAO.getAllEmployees()
+    override suspend fun getAllEmployees(currentUserId: String): Flow<DatabaseResult<List<Employee?>>> {
+        return employeeDAO.getAllEmployees(currentUserId)
     }
 }

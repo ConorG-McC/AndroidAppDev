@@ -8,23 +8,25 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
+import com.example.androidappdev.data.auth.AuthRepo
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.employee.EmployeeRepo
 
-class EditEmployeeViewModel(private val repo: EmployeeRepo) :
-    ViewModel() {
+class EditEmployeeViewModel(private val repo: EmployeeRepo,
+                            private val authRepo: AuthRepo
+) : ViewModel() {
     private var selectedEmployee: Employee? = null
 
     var id by mutableStateOf("")
     var firstName by mutableStateOf("")
     var surname by mutableStateOf("")
-
-    fun setSelectedEmployee(employee: Employee){
+    fun setSelectedEmployee(employee: Employee) {
         id = employee.id.toString()
         firstName = employee.firstName.toString()
         surname = employee.surname.toString()
         selectedEmployee = employee
     }
+
     fun firstNameIsValid(): Boolean {
         return firstName.isNotBlank()
     }
@@ -36,14 +38,15 @@ class EditEmployeeViewModel(private val repo: EmployeeRepo) :
     fun updateEmployee() {
         selectedEmployee!!.firstName = firstName
         selectedEmployee!!.surname = surname
-        repo.editEmployee(selectedEmployee!!)
+        repo.editEmployee(selectedEmployee!!, authRepo.currentUser!!.uid)
     }
 
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                EditEmployeeViewModel(repo = MyAppApplication.container.employeeRepository
+                EditEmployeeViewModel(authRepo = MyAppApplication.container.authRepository,
+                                      repo = MyAppApplication.container.employeeRepository
                 )
             }
         }

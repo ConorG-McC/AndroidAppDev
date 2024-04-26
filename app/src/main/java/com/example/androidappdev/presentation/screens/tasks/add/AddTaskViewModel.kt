@@ -8,11 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
+import com.example.androidappdev.data.auth.AuthRepo
 import com.example.androidappdev.data.task.Task
 import com.example.androidappdev.data.task.TaskRepo
 import com.example.androidappdev.data.task.TaskStatus
 
-class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
+class AddTaskViewModel(private val authRepo: AuthRepo,
+                       private val repo: TaskRepo
+) : ViewModel() {
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
     fun onTitleChange(title: String) {
@@ -39,10 +42,10 @@ class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
         if (allDataIsValid()) {
             val newTask = Task(_title.value.toString(),
                                _description.value.toString(),
-                                 _status.value!!
+                               _status.value!!
             )
             Log.d("NEW TASK TO ADD", newTask.toString())
-            repo.addTask(newTask)
+            repo.addTask(newTask, authRepo.currentUser!!.uid)
             clear()
         }
     }
@@ -52,11 +55,12 @@ class AddTaskViewModel(private val repo: TaskRepo) : ViewModel() {
         _description.value = String()
     }
 
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddTaskViewModel(repo = MyAppApplication.container.taskRepository
+                AddTaskViewModel(authRepo = MyAppApplication.container.authRepository,
+                                 repo = MyAppApplication.container.taskRepository
+
                 )
             }
         }

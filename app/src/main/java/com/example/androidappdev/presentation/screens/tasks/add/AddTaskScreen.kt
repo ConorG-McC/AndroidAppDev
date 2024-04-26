@@ -1,5 +1,6 @@
 package com.example.androidappdev.presentation.screens.tasks.add
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,15 +35,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.androidappdev.R
 import com.example.androidappdev.data.task.TaskStatus
+import com.example.androidappdev.presentation.components.BottomNavBar
 import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddTaskScreen(
-    text: String,
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
+        text: String,
+        modifier: Modifier = Modifier,
+        navController: NavHostController,
+        vm: AddTaskViewModel = viewModel(factory = AddTaskViewModel.Factory),
 ) {
     val title: String by vm.title.observeAsState("")
     val description: String by vm.description.observeAsState("")
@@ -50,86 +54,94 @@ fun AddTaskScreen(
     val taskStatusList = TaskStatus.entries
     var selectedStatus by remember { mutableStateOf(taskStatusList[0]) }
 
-    Column(modifier = modifier
-    ) {
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = text,
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-        )
-        Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            CustomTextField(stringResource(R.string.title_hint),
-                text = title,
-                onNameChange = { vm.onTitleChange(it) },
-                stringResource(R.string.title_error_message),
-                !vm.title.value.isNullOrBlank()
+    Scaffold(modifier = modifier,
+             bottomBar = { BottomNavBar(navController = navController) }) {
+        Column(modifier = modifier
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = text,
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
             )
-            CustomTextField(stringResource(R.string.description_hint),
-                text = description,
-                onNameChange = { vm.onDescriptionChange(it) },
-                stringResource(R.string.description_error_message),
-                !vm.description.value.isNullOrBlank()
-            )
+            Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                CustomTextField(stringResource(R.string.title_hint),
+                                text = title,
+                                isPassword = false,
+                                onNameChange = { vm.onTitleChange(it) },
+                                stringResource(R.string.title_error_message),
+                                !vm.title.value.isNullOrBlank()
+                )
+                CustomTextField(stringResource(R.string.description_hint),
+                                text = description,
+                                isPassword = false,
+                                onNameChange = { vm.onDescriptionChange(it) },
+                                stringResource(R.string.description_error_message),
+                                !vm.description.value.isNullOrBlank()
+                )
 
 
-            Box(modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .fillMaxWidth(), contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    selectedStatus.status,
-                    modifier = Modifier
-                        .clickable { expanded = true }
-                        .padding(horizontal = 10.dp)
-                        .background(Color.DarkGray, RoundedCornerShape(10.dp))
-                        .padding(10.dp)
-                        .clip(RoundedCornerShape(10.dp)),
-                    fontSize = 20.sp,
-                    color = Color.White,
-                )
-                Box(modifier = Modifier.absoluteOffset(y = 10.dp, x = (-40).dp
-                )
+                Box(modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(), contentAlignment = Alignment.Center
                 ) {
-                    DropdownMenu(expanded,
-                        onDismissRequest = { expanded = false }) {
-                        taskStatusList.forEach { status ->
-                            DropdownMenuItem(
-                                text = {
-                                    Text(status.status, fontSize = 20.sp)
-                                },
-                                onClick = {
-                                    selectedStatus = status
-                                    vm.onStatusChange(status)
-                                    expanded = false
-                                },
-                                modifier = Modifier.padding(horizontal = 10.dp),
+                    Text(
+                        selectedStatus.status,
+                        modifier = Modifier
+                            .clickable { expanded = true }
+                            .padding(horizontal = 10.dp)
+                            .background(Color.DarkGray,
+                                        RoundedCornerShape(10.dp)
                             )
+                            .padding(10.dp)
+                            .clip(RoundedCornerShape(10.dp)),
+                        fontSize = 20.sp,
+                        color = Color.White,
+                    )
+                    Box(modifier = Modifier.absoluteOffset(y = 10.dp,
+                                                           x = (-40).dp
+                    )
+                    ) {
+                        DropdownMenu(expanded,
+                                     onDismissRequest = { expanded = false }) {
+                            taskStatusList.forEach { status ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(status.status, fontSize = 20.sp)
+                                    },
+                                    onClick = {
+                                        selectedStatus = status
+                                        vm.onStatusChange(status)
+                                        expanded = false
+                                    },
+                                    modifier = Modifier.padding(horizontal = 10.dp),
+                                )
+                            }
                         }
                     }
                 }
-            }
 
 
-            Row(horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                CustomButton(stringResource(R.string.add), clickButton = {
-                    vm.add()
-                    keyboardController?.hide()
-                    navController.navigate("Tasks")
-                })
+                Row(horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CustomButton(stringResource(R.string.add), clickButton = {
+                        vm.add()
+                        keyboardController?.hide()
+                        navController.navigate("Tasks")
+                    })
+                }
+
+                Row(horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CustomButton(stringResource(R.string.close),
+                                 clickButton = { navController.navigate("Tasks") })
+                }
             }
 
-            Row(horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                CustomButton(stringResource(R.string.close),
-                    clickButton = { navController.navigate("Tasks") })
-            }
         }
-
     }
 }

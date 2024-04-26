@@ -45,7 +45,7 @@ open class NavScreen(var icon: Int, var route: String) {
 fun NavigationGraph(navController: NavHostController,
                     modifier: Modifier = Modifier.testTag("TestNavGraph")
 ) {
-    
+
     var selectedTask: Task? = null
     var selectedEmployee: Employee? = null
 
@@ -119,12 +119,15 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.EditTask.route) {
-            EditTaskScreen(selectedTask = selectedTask!!, onClickToHome = {
-                if (selectedTask != null) {
-                    navController.navigate("Tasks"
-                    )
-                }
-            })
+            EditTaskScreen(modifier,
+                           navController,
+                           selectedTask = selectedTask!!,
+                           onClickToHome = {
+                               if (selectedTask != null) {
+                                   navController.navigate("Tasks"
+                                   )
+                               }
+                           })
         }
         composable(NavScreen.AddTask.route) {
             AddTaskScreen(stringResource(R.string.add_task_button),

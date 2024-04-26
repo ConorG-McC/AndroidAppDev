@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.androidappdev.core.MyAppApplication
+import com.example.androidappdev.data.auth.AuthRepo
 import com.example.androidappdev.data.employee.Employee
 import com.example.androidappdev.data.employee.EmployeeRepo
 
-class AddEmployeeViewModel(private val repo: EmployeeRepo) :
-    ViewModel() {
+class AddEmployeeViewModel(private val repo: EmployeeRepo,
+                           private val authRepo: AuthRepo
+) : ViewModel() {
 
     private var _firstName = MutableLiveData(String())
     val firstName: LiveData<String> = _firstName
@@ -32,12 +34,11 @@ class AddEmployeeViewModel(private val repo: EmployeeRepo) :
 
     fun add() {
         if (allDataIsValid()) {
-            val newEmployee = Employee(
-                _firstName.value.toString(),
-                _surname.value.toString()
-            )
+            val newEmployee =
+                Employee(_firstName.value.toString(), _surname.value.toString()
+                )
             Log.d("NEW EMPLOYEE TO ADD", newEmployee.toString())
-            repo.addEmployee(newEmployee)
+            repo.addEmployee(newEmployee, authRepo.currentUser!!.uid)
             clear()
         }
     }
@@ -47,11 +48,12 @@ class AddEmployeeViewModel(private val repo: EmployeeRepo) :
         _surname.value = String()
     }
 
-//     Define ViewModel factory in a companion object
+    //     Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                AddEmployeeViewModel(repo = MyAppApplication.container.employeeRepository
+                AddEmployeeViewModel(authRepo = MyAppApplication.container.authRepository,
+                                     repo = MyAppApplication.container.employeeRepository
                 )
             }
         }

@@ -16,7 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -103,7 +103,7 @@ fun EmployeeScreen(
 fun LazyColumnWithSelection(vm: EmployeeViewModel,
                             onIndexChange: (Employee) -> Unit
 ) {
-    var selectedIndexToHighlight by remember { mutableStateOf(-1) }
+    var selectedIndexToHighlight by remember { mutableIntStateOf(-1) }
 
     LazyColumn(modifier = Modifier.padding(vertical = 20.dp)) {
         itemsIndexed(vm.userState.value.data) { index, item ->

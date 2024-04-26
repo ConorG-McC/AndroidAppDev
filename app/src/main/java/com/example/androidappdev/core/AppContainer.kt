@@ -1,6 +1,5 @@
 package com.example.androidappdev.core
 
-import android.content.Context
 import com.example.androidappdev.data.auth.AuthRepo
 import com.example.androidappdev.data.auth.AuthRepository
 import com.example.androidappdev.data.employee.EmployeeDAO
@@ -27,11 +26,12 @@ interface AppContainer {
     val authRepository: AuthRepo
 }
 
-class AppDataContainer(private val context: Context) : AppContainer {
+class AppDataContainer() : AppContainer {
     override val taskRepository: TaskRepo
     override val employeeRepository: EmployeeRepository
     override val userRepository: UserRepo
-    override lateinit var authRepository: AuthRepo
+    override var authRepository: AuthRepo =
+        AuthRepository(FirebaseAuth.getInstance())
 
     init {
         // tasks
@@ -51,6 +51,5 @@ class AppDataContainer(private val context: Context) : AppContainer {
         val userDAO = UserDAO(userRoot)
         userRepository = UserRepository(userDAO)
 
-        authRepository = AuthRepository(FirebaseAuth.getInstance())
     }
 }

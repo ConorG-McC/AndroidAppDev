@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -27,7 +26,6 @@ import com.example.androidappdev.presentation.screens.login.components.LogIn
 import com.example.androidappdev.utils.Utils.Companion.showMessage
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
         vm: LoginViewModel = viewModel(factory = LoginViewModel.Factory),

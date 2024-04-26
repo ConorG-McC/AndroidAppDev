@@ -1,6 +1,5 @@
 package com.example.androidappdev.presentation.screens.tasks.view
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -24,7 +23,6 @@ class TaskViewModel(private val authRepo: AuthRepo, private val repo: TaskRepo
     val userState: StateFlow<DatabaseState<Task>> =
         _userState.asStateFlow()//Monitored by component for recomposition on change
 
-    val items = mutableStateListOf<Task>()
     var selectedTask: Task? = null
     fun taskHasBeenSelected(): Boolean = selectedTask != null
 

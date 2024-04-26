@@ -5,17 +5,19 @@ import kotlinx.coroutines.flow.Flow
 import com.google.android.gms.tasks.Task as DBTask
 
 interface TaskRepo {
-    fun deleteTask(task: Task): DBTask<Void>
+    fun deleteTask(task: Task, currentUserId: String): DBTask<Void>
     fun addTask(task: Task, currentUserId: String): DBTask<Void>
     fun editTask(task: Task, currentUserId: String): DBTask<Void>
     suspend fun getAllTasks(currentUserId: String): Flow<DatabaseResult<List<Task?>>>
 
 }
 
-class TaskRepository(private val taskDAO: TaskDAO) : TaskRepo {
+class TaskRepository(
+        private val taskDAO: TaskDAO,
+) : TaskRepo {
 
-    override fun deleteTask(task: Task): DBTask<Void> {
-        return taskDAO.delete(task)
+    override fun deleteTask(task: Task, currentUserId: String): DBTask<Void> {
+        return taskDAO.delete(task, currentUserId)
     }
 
     override fun addTask(task: Task, currentUserId: String): DBTask<Void> {

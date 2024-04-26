@@ -18,8 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private val authRepo: AuthRepo,
-                    private val repo: TaskRepo
+class TaskViewModel(private val authRepo: AuthRepo, private val repo: TaskRepo
 ) : ViewModel() {
     private val _userState = MutableStateFlow(DatabaseState<Task>())
     val userState: StateFlow<DatabaseState<Task>> =
@@ -55,7 +54,7 @@ class TaskViewModel(private val authRepo: AuthRepo,
 
     fun deleteTask() {
         if (taskHasBeenSelected()) {
-            repo.deleteTask(selectedTask!!)
+            repo.deleteTask(selectedTask!!, authRepo.currentUser!!.uid)
             selectedTask = null
         }
     }

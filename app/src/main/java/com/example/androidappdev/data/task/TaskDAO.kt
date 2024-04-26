@@ -43,6 +43,7 @@ class TaskDAO(private val database: DatabaseReference) {
         database.child(currentUserId).child(editTask.id.toString())
             .setValue(editTask)
 
-    fun delete(task: Task) = database.child(task.id.toString()).removeValue()
+    fun delete(task: Task, currentUserId: String) =
+        database.child(currentUserId).child(task.id.toString()).removeValue()
 
 }

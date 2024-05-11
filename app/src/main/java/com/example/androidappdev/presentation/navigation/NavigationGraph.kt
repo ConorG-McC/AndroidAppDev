@@ -21,16 +21,12 @@ import com.example.androidappdev.presentation.screens.signup.SignUpScreen
 import com.example.androidappdev.presentation.screens.tasks.add.AddTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.edit.EditTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.view.TasksScreen
-import com.example.androidappdev.presentation.screens.team.add.AddTeamScreen
-import com.example.androidappdev.presentation.screens.team.view.TeamScreen
 
 open class NavScreen(var icon: Int, var route: String) {
     data object Login : NavScreen(R.drawable.home, "Login")
     data object SignUp : NavScreen(R.drawable.home, "SignUp")
     data object ForgotPassword : NavScreen(R.drawable.home, "ForgotPassword")
     data object Home : NavScreen(R.drawable.home, "Home")
-    data object Team : NavScreen(R.drawable.team, "Team")
-    data object AddTeam : NavScreen(R.drawable.team, "AddTeam")
     data object Employees : NavScreen(R.drawable.employees, "Employees")
     data object AddEmployee : NavScreen(R.drawable.employees, "AddEmployee")
     data object EditEmployee : NavScreen(R.drawable.employees, "EditEmployee")
@@ -69,18 +65,6 @@ fun NavigationGraph(navController: NavHostController,
             HomeScreen(stringResource(R.string.home_button),
                        navController,
                        modifier
-            )
-        }
-        composable(NavScreen.Team.route) {
-            TeamScreen(stringResource(R.string.team_button),
-                       modifier,
-                       navController
-            )
-        }
-        composable(NavScreen.AddTeam.route) {
-            AddTeamScreen(stringResource(R.string.add_team_button),
-                          modifier,
-                          navController
             )
         }
         composable(NavScreen.Employees.route) {

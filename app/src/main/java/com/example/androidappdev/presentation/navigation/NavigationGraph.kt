@@ -23,7 +23,6 @@ import com.example.androidappdev.presentation.screens.tasks.edit.EditTaskScreen
 import com.example.androidappdev.presentation.screens.tasks.view.TasksScreen
 import com.example.androidappdev.presentation.screens.team.add.AddTeamScreen
 import com.example.androidappdev.presentation.screens.team.view.TeamScreen
-import kotlin.system.exitProcess
 
 open class NavScreen(var icon: Int, var route: String) {
     data object Login : NavScreen(R.drawable.home, "Login")
@@ -63,7 +62,7 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.SignUp.route) {
-            SignUpScreen(navigateBack = { navController.popBackStack() })
+            SignUpScreen(navigateBack = { navController.navigate(NavScreen.Login.route) })
 
         }
         composable(NavScreen.Home.route) {
@@ -136,8 +135,10 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.Exit.route) {
+            // TODO - BUG - Logout is not clearing the UI state causing next user to see the previous user's data before refresh
+            navController.navigate(NavScreen.Login.route)
             MyAppApplication.container.authRepository.signOut()
-            exitProcess(0)
+//            exitProcess(0)
         }
     }
 }

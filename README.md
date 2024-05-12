@@ -1,2 +1,2 @@
 # AndroidAppDev
-Android Application Development Module - Tutorial Tasks
+Android Application Development Module

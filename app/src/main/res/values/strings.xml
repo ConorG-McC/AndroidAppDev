@@ -11,14 +11,6 @@
     <string name="close">Close</string>
     <string name="no_selection">Please select an item from the list</string>
 
-
-    //Team
-    <string name="team_button">Team</string>
-    <string name="add_team_button">Add Team</string>
-    <string name="team_name_hint">Team Name</string>
-    <string name="team_name_error_message">Team Name is blank</string>
-
-
     // Employee
     <string name="employee_button">Employee</string>
     <string name="add_employee_button">Add Employee</string>

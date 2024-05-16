@@ -57,7 +57,6 @@ fun BottomNavBar(navController: NavController) {
 @Composable
 private fun createListOfItems(): List<NavScreen> {
     return listOf(NavScreen.Home,
-                  NavScreen.Team,
                   NavScreen.Employees,
                   NavScreen.Tasks,
                   NavScreen.Exit

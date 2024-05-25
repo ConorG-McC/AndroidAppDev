@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidappdev.R
+import com.example.androidappdev.presentation.components.CustomButton
 import com.example.androidappdev.presentation.components.CustomTextField
 import com.example.androidappdev.presentation.components.SmallSpacer
 import com.example.androidappdev.presentation.screens.signup.components.SignUp
@@ -30,6 +29,7 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
 
     Scaffold(content = { padding ->
         val keyboard = LocalSoftwareKeyboardController.current
+        Text(text = stringResource(R.string.sign_up_screen_title))
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -69,22 +69,16 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                             errorPresent = vm.passwordIsValid()
             )
             SmallSpacer()
-            Button(onClick = {
-                keyboard?.hide()
-                vm.signUpWithEmailAndPassword()
-            }) {
-                Text(text = stringResource(R.string.sign_up_button),
-                     fontSize = 15.sp
-                )
-            }
+            CustomButton(stringResource(R.string.sign_up_button),
+                         clickButton = {
+                             keyboard?.hide()
+                             vm.signUpWithEmailAndPassword()
+                         })
             Row {
-                Button(onClick = {
-                    navigateBack()
-                }) {
-                    Text(text = stringResource(R.string.already_a_user),
-                         fontSize = 15.sp
-                    )
-                }
+                CustomButton(stringResource(R.string.already_a_user),
+                             clickButton = {
+                                 navigateBack()
+                             })
 
             }
         }

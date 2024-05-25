@@ -12,7 +12,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runners.MethodSorters
 
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -21,7 +20,7 @@ import org.junit.runners.MethodSorters
 //fun CustomButton(text: String, clickButton: () -> Unit) {
 
 
-@FixMethodOrder( MethodSorters.DEFAULT)
+@FixMethodOrder(MethodSorters.DEFAULT)
 class CustomButtonTests {
 
     private val TEXT_DISPLAY = "button text"
@@ -35,12 +34,12 @@ class CustomButtonTests {
     @Before
     fun setUp() {
         rule.setContent {
-            CustomButton(TEXT_DISPLAY, clickButton = {state=true})
+            CustomButton(TEXT_DISPLAY, clickButton = { state = true })
         }
     }
 
     @Test
-    fun `check if displays text and executes function passed to it when clicked`() {
+    fun `Button displays expected text and executes function passed to it when clicked`() {
         rule.onNode(button).assertExists()
         rule.onNode(button).performClick()
         assertTrue(state)

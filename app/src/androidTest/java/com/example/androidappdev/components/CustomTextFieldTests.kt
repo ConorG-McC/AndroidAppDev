@@ -15,14 +15,14 @@ import org.junit.runners.MethodSorters
 
 /**
  * fun CustomTextField(hintText: String,
-                                text: String,
-                                isPasswordField: Boolean = false,
-                                onValueChange: (String) -> Unit,
-                                errorMessage: String,
-                                errorPresent: Boolean){
+text: String,
+isPasswordField: Boolean = false,
+onValueChange: (String) -> Unit,
+errorMessage: String,
+errorPresent: Boolean){
  */
 
-@FixMethodOrder( MethodSorters.DEFAULT)
+@FixMethodOrder(MethodSorters.DEFAULT)
 class CustomTextFieldTests {
     //Data to initialise component
     private val HINT_TEXT = "hint text"
@@ -40,15 +40,14 @@ class CustomTextFieldTests {
     var rule = createComposeRule()
 
     @Test
-    fun `check default state of the textfield with text present`() {
+    fun `Textfield displays expected default state while text is present`() {
         rule.setContent {
-            CustomTextField(
-                HINT_TEXT,
-                TEXT_TO_BE_DISPLAYED,
-                isPassword = false,
-                onNameChange = { textInput = it },
-                ERROR_MESSAGE_TEXT,
-                errorIsNotPresent
+            CustomTextField(HINT_TEXT,
+                            TEXT_TO_BE_DISPLAYED,
+                            isPassword = false,
+                            onNameChange = { textInput = it },
+                            ERROR_MESSAGE_TEXT,
+                            errorIsNotPresent
             )
         }
 
@@ -60,16 +59,15 @@ class CustomTextFieldTests {
     }
 
     @Test
-    fun `check state of the textfield with additional valid text input`() {
+    fun `Textfield displays expected state after additional valid text is input`() {
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(
-                    HINT_TEXT,
-                    TEXT_TO_BE_DISPLAYED,
-                    isPassword = false,
-                    onNameChange = { textInput = it },
-                    ERROR_MESSAGE_TEXT,
-                    errorIsNotPresent
+                CustomTextField(HINT_TEXT,
+                                TEXT_TO_BE_DISPLAYED,
+                                isPassword = false,
+                                onNameChange = { textInput = it },
+                                ERROR_MESSAGE_TEXT,
+                                errorIsNotPresent
                 )
             }
         }
@@ -84,18 +82,17 @@ class CustomTextFieldTests {
     }
 
     @Test
-    fun `textfield with error present state set should display an error_message`() {
+    fun `textfield displays error_message when error is present`() {
         //As validation of button is external and this component is tested separately we need to set the errorIsNotPresent to false explicitly
         //Text - regardless of contents - is irrelevant to the validation in the context of this component
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(
-                    HINT_TEXT,
-                    "",
-                    isPassword = false,
-                    onNameChange = { textInput = it },
-                    ERROR_MESSAGE_TEXT,
-                    !errorIsNotPresent
+                CustomTextField(HINT_TEXT,
+                                "",
+                                isPassword = false,
+                                onNameChange = { textInput = it },
+                                ERROR_MESSAGE_TEXT,
+                                !errorIsNotPresent
                 )
             }
         }
@@ -104,24 +101,23 @@ class CustomTextFieldTests {
     }
 
     @Test
-    fun `Textfield with display asterix of characters when set to password`() {
+    fun `Textfield displays asterix of characters when set to password`() {
 
         var inputText = "test"
 
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(
-                    HINT_TEXT,
-                    inputText,
-                    isPassword = true,
-                    onNameChange = { textInput = it },
-                    ERROR_MESSAGE_TEXT,
-                    !errorIsNotPresent
+                CustomTextField(HINT_TEXT,
+                                inputText,
+                                isPassword = true,
+                                onNameChange = { textInput = it },
+                                ERROR_MESSAGE_TEXT,
+                                !errorIsNotPresent
                 )
             }
         }
         //Replace contents with *
-        inputText = inputText.replaceRange(0,inputText.length,"*")
+        inputText = inputText.replaceRange(0, inputText.length, "*")
         rule.onNodeWithText("****").assertExists()
     }
 }

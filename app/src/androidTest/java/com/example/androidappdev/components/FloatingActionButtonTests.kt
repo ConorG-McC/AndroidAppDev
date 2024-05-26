@@ -7,9 +7,12 @@ import androidx.compose.ui.test.performClick
 import com.example.androidappdev.presentation.components.FloatingButton
 import junit.framework.TestCase.assertTrue
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runners.MethodSorters
 
+@FixMethodOrder(MethodSorters.DEFAULT)
 class FloatingActionButtonTests {
     private val CONTENT_DESCRIPTION = "Add Button"
     private var state: Boolean = false
@@ -29,7 +32,7 @@ class FloatingActionButtonTests {
     }
 
     @Test
-    fun `Button displays expected content description and executes function passed to it when clicked`() {
+    fun `Button executes function passed to it when clicked`() {
         rule.onNode(button).assertExists()
         rule.onNode(button).performClick()
         assertTrue(state)

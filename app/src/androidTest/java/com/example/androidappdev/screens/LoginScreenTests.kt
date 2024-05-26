@@ -2,6 +2,7 @@ package com.example.androidappdev.screens
 
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.androidappdev.R
 import org.junit.Before
@@ -52,8 +53,11 @@ open class LoginScreenTests : ScreenTests() {
     }
 
 
-    //@Test
+    @Test
     fun `valid request for forgot password with email`() {
+        rule.onNode(emailAddressTextField).performTextInput("newuser@email.com")
+        rule.onNode(forgotPasswordButton).performClick()
+        rule.onNode(emailAddressTextField).assertExists()
 
     }
 

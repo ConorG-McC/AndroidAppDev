@@ -42,10 +42,8 @@ class CustomTextFieldTests {
                 )
             }
         }
-
         rule.onNode(hintText).assertExists()
         rule.onNode(textToEnter).assertExists()
-
         rule.onNodeWithText(ERROR_MESSAGE_TEXT).assertDoesNotExist()
         TestCase.assertTrue(errorIsNotPresent)
     }
@@ -69,9 +67,6 @@ class CustomTextFieldTests {
 
         // Give time for Compose to reflect state updates
         rule.waitForIdle()
-
-        // Log the textInput state for debugging
-        println("Current textInput value: $textInput")
 
         rule.onNodeWithText(textInput)
             .equals(TEXT_TO_BE_DISPLAYED.plus(ADDITIONAL_TEXT))

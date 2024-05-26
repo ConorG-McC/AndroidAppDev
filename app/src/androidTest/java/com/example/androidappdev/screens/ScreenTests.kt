@@ -58,7 +58,8 @@ open abstract class ScreenTests {
     lateinit var taskDescriptionField: SemanticsMatcher
     lateinit var taskStatusDropdown: SemanticsMatcher
 
-    val listItem = hasText("$TASK_TITLE1 $TASK_DESCRIPTION1 ${TASK_STATUS1.status}")
+    val listItem =
+        hasText("$TASK_TITLE1 $TASK_DESCRIPTION1 ${TASK_STATUS1.status}")
 
     //Data for add screen
 //    val FIRST_NAME1 = "first1"
@@ -95,22 +96,25 @@ open abstract class ScreenTests {
             hasContentDescription(rule.activity.getString(R.string.already_a_user) + BUTTON_POSTFIX)
 
         //Home screen
-        homeScreenText = hasText(rule.activity.getString(R.string.home_welcome_message))
+        homeScreenText =
+            hasText(rule.activity.getString(R.string.home_welcome_message))
 
         //Tasks screen
-        tasksScreenEmptyText = hasText(rule.activity.getString(R.string.task_screen_default_message))
-        tasksFloatingActionButton = hasContentDescription("Add new task" )
+        tasksScreenEmptyText =
+            hasText(rule.activity.getString(R.string.task_screen_default_message))
+        tasksFloatingActionButton = hasContentDescription("Add new task")
         taskTitleField =
             hasContentDescription(rule.activity.getString(R.string.title_hint))
         taskDescriptionField =
             hasContentDescription(rule.activity.getString(R.string.description_hint))
         taskStatusDropdown = hasContentDescription("StatusDropdown")
-        addButton = hasContentDescription(rule.activity.getString(R.string.add) + " button")
+        addButton =
+            hasContentDescription(rule.activity.getString(R.string.add) + " button")
 
-        editButton = hasContentDescription(rule.activity.getString(R.string.edit) + " button")
+        editButton =
+            hasContentDescription(rule.activity.getString(R.string.edit) + " button")
         deleteButton =
             hasContentDescription(rule.activity.getString(R.string.delete) + BUTTON_POSTFIX)
-
 
 
 //
@@ -134,6 +138,17 @@ open abstract class ScreenTests {
     fun `enter_a_valid_task`() {
         rule.onNode(taskTitleField).performTextInput(TASK_TITLE1)
         rule.onNode(taskDescriptionField).performTextInput(TASK_DESCRIPTION1)
+        // Open the dropdown menu and select a status
+        rule.onNode(taskStatusDropdown).performClick()
+        rule.onNodeWithText(TASK_STATUS1.status).performClick()
+
+        rule.onNode(addButton).performClick()
+    }
+
+    //enter an invalid task
+    fun `enter_an_invalid_task`() {
+        rule.onNode(taskTitleField).performTextInput("")
+        rule.onNode(taskDescriptionField).performTextInput("")
         // Open the dropdown menu and select a status
         rule.onNode(taskStatusDropdown).performClick()
         rule.onNodeWithText(TASK_STATUS1.status).performClick()

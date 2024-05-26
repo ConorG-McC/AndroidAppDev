@@ -42,8 +42,31 @@ class SignUpScreenTests : ScreenTests() {
         rule.onNode(signUpButton).performClick()
     }
 
-    //@Test
-    fun `enter invalid sign up details`() {
-        //tba
+    @Test
+    fun `When invalid sign up details are provided the user is not able to sign up`() {
+        rule.onNode(signUpButton).performClick()
+
+        rule.onNode(firstNameTextField).performTextInput("")
+        rule.onNode(surnameTextField).performTextInput("")
+        rule.onNode(emailAddressTextField).performTextInput("")
+        rule.onNode(passwordTextField).performTextInput("")
+        rule.onNode(signUpButton).performClick()
+
+        //check that the user is still on the sign up page
+        val pageTitle =
+            hasText(rule.activity.getString(R.string.sign_up_screen_title))
+        rule.onNode(pageTitle).assertExists()
+    }
+
+    @Test
+    fun `When already a user is clicked the user is taken back to the sign in page`() {
+        rule.onNode(signUpButton).performClick()
+        rule.onNode(alreadyAUserButton).performClick()
+
+        //on sign in page
+        rule.onNode(bottomNavBar).assertDoesNotExist()
+        rule.onNode(emailAddressTextField).assertExists()
+        rule.onNode(passwordTextField).assertExists()
+        rule.onNode(signInButton).assertExists()
     }
 }

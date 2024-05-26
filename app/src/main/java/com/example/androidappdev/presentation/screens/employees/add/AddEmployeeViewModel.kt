@@ -28,7 +28,7 @@ class AddEmployeeViewModel(private val repo: EmployeeRepo,
         _surname.value = description
     }
 
-    private fun allDataIsValid(): Boolean {
+    fun allDataIsValid(): Boolean {
         return _firstName.value!!.isNotBlank() && _surname.value!!.isNotBlank()
     }
 

@@ -26,7 +26,6 @@ class EditTaskViewModel(private val authRepo: AuthRepo,
 
     private var _status = MutableLiveData<TaskStatus>()
     val status: LiveData<TaskStatus> = _status
-
     fun setSelectedTask(task: Task) {
         id = task.id.toString()
         title = task.title.toString()
@@ -56,12 +55,17 @@ class EditTaskViewModel(private val authRepo: AuthRepo,
         }
     }
 
+    fun allDataIsValid(): Boolean {
+        return title.isNotBlank() && description.isNotBlank()
+    }
+
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 EditTaskViewModel(authRepo = MyAppApplication.container.authRepository,
-                    repo = MyAppApplication.container.taskRepository)
+                                  repo = MyAppApplication.container.taskRepository
+                )
             }
         }
     }

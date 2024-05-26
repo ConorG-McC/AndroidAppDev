@@ -41,6 +41,10 @@ class EditEmployeeViewModel(private val repo: EmployeeRepo,
         repo.editEmployee(selectedEmployee!!, authRepo.currentUser!!.uid)
     }
 
+    fun allDataIsValid(): Boolean {
+        return firstName.isNotBlank() && surname.isNotBlank()
+    }
+
     // Define ViewModel factory in a companion object
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

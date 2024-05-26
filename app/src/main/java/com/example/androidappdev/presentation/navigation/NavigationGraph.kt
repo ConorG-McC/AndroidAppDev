@@ -84,7 +84,9 @@ fun NavigationGraph(navController: NavHostController,
             )
         }
         composable(NavScreen.EditEmployee.route) {
-            EditEmployeeScreen(selectedEmployee = selectedEmployee!!,
+            EditEmployeeScreen(modifier = modifier,
+                               navController = navController,
+                               selectedEmployee = selectedEmployee!!,
                                onClickToHome = {
                                    if (selectedEmployee != null) navController.navigate(
                                        "Employees"

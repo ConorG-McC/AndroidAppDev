@@ -1,6 +1,7 @@
 package com.example.androidappdev.presentation.screens.tasks.edit
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,13 +46,14 @@ import com.example.androidappdev.utils.Utils.Companion.getStatusColor
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun EditTaskScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    vm: EditTaskViewModel = viewModel(factory = EditTaskViewModel.Factory),
-    selectedTask: Task,
-    onClickToHome: () -> Unit
+fun EditTaskScreen(modifier: Modifier = Modifier,
+                   navController: NavHostController,
+                   vm: EditTaskViewModel = viewModel(factory = EditTaskViewModel.Factory),
+                   selectedTask: Task,
+                   onClickToHome: () -> Unit
 ) {
+    val context = LocalContext.current
+
     var expanded by remember { mutableStateOf(false) }
     val taskStatusList = TaskStatus.entries
     var selectedStatus by remember { mutableStateOf(selectedTask.status) }
@@ -59,72 +62,67 @@ fun EditTaskScreen(
         vm.setSelectedTask(selectedTask)
     }
 
-    Scaffold(
-        modifier = modifier,
-        bottomBar = { BottomNavBar(navController = navController) }
-    ) {
+    Scaffold(modifier = modifier,
+             bottomBar = { BottomNavBar(navController = navController) }) {
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
-                text = "Edit Task",
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.fillMaxWidth()
+            Text(text = "Edit Task",
+                 textAlign = TextAlign.Center,
+                 fontSize = 24.sp,
+                 fontWeight = FontWeight.Bold,
+                 color = Color.Black,
+                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Column(modifier = Modifier.fillMaxWidth(),
+                   horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CustomTextField(
-                    hintText = stringResource(R.string.title_hint),
-                    text = vm.title,
-                    isPassword = false,
-                    onNameChange = { vm.title = it },
-                    errorMessage = stringResource(R.string.title_error_message),
-                    errorPresent = vm.titleIsValid()
+                CustomTextField(hintText = stringResource(R.string.title_hint),
+                                text = vm.title,
+                                isPassword = false,
+                                onNameChange = { vm.title = it },
+                                errorMessage = stringResource(R.string.title_error_message),
+                                errorPresent = vm.titleIsValid()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                CustomTextField(
-                    hintText = stringResource(R.string.description_hint),
-                    text = vm.description,
-                    isPassword = false,
-                    onNameChange = { vm.description = it },
-                    errorMessage = stringResource(R.string.description_error_message),
-                    errorPresent = vm.descriptionIsValid()
+                CustomTextField(hintText = stringResource(R.string.description_hint),
+                                text = vm.description,
+                                isPassword = false,
+                                onNameChange = { vm.description = it },
+                                errorMessage = stringResource(R.string.description_error_message),
+                                errorPresent = vm.descriptionIsValid()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Box(
-                    modifier = Modifier
-                        .width(200.dp)
-                        .clickable { expanded = true }
-                        .padding(horizontal = 10.dp)
-                        .background(getStatusColor(selectedStatus), RoundedCornerShape(10.dp))
-                        .padding(10.dp)
-                        .clip(RoundedCornerShape(10.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        selectedStatus.status,
-                        fontSize = 20.sp,
-                        color = Color.White
+                Box(modifier = Modifier
+                    .width(200.dp)
+                    .clickable { expanded = true }
+                    .padding(horizontal = 10.dp)
+                    .background(getStatusColor(selectedStatus),
+                                RoundedCornerShape(10.dp)
                     )
-                    Box(
-                        modifier = Modifier.absoluteOffset(y = 10.dp, x = (-40).dp)
+                    .padding(10.dp)
+                    .clip(RoundedCornerShape(10.dp)),
+                    contentAlignment = Alignment.Center) {
+                    Text(selectedStatus.status,
+                         fontSize = 20.sp,
+                         color = Color.White
+                    )
+                    Box(modifier = Modifier.absoluteOffset(y = 10.dp,
+                                                           x = (-40).dp
+                    )
                     ) {
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
+                        DropdownMenu(expanded = expanded,
+                                     onDismissRequest = { expanded = false }) {
                             taskStatusList.forEach { status ->
                                 DropdownMenuItem(
-                                    text = { Text(status.status, fontSize = 20.sp) },
+                                    text = {
+                                        Text(status.status, fontSize = 20.sp
+                                        )
+                                    },
                                     onClick = {
                                         selectedStatus = status
                                         vm.onStatusChange(status)
@@ -137,18 +135,21 @@ fun EditTaskScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
-                CustomButton(
-                    text = stringResource(R.string.save),
-                    clickButton = {
-                        vm.updateTask()
-                        onClickToHome()
-                    }
-                )
+                CustomButton(text = stringResource(R.string.save),
+                             clickButton = {
+                                 if (vm.allDataIsValid()) {
+                                     vm.updateTask()
+                                     onClickToHome()
+                                 } else {
+                                     Toast.makeText(context,
+                                                    R.string.fields_not_valid,
+                                                    Toast.LENGTH_SHORT
+                                     ).show()
+                                 }
+                             })
                 Spacer(modifier = Modifier.height(1.dp))
-                CustomButton(
-                    text = stringResource(R.string.close),
-                    clickButton = { onClickToHome() }
-                )
+                CustomButton(text = stringResource(R.string.close),
+                             clickButton = { onClickToHome() })
             }
         }
     }

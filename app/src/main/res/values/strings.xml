@@ -14,6 +14,7 @@
     <string name="fields_not_valid">Fields are not valid</string>
 
     // Employee
+    <string name="employee_screen_default_message">No Employees available.\nClick on the action button (Top Right) to get started.</string>
     <string name="employee_button">Employee</string>
     <string name="add_employee_button">Add Employee</string>
     <string name="first_name_hint">First Name</string>

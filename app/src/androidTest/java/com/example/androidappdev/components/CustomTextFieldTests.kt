@@ -6,23 +6,13 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import com.example.androidappdev.presentation.components.CustomTextField
 import com.example.androidappdev.presentation.theme.AndroidAppDevTheme
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import junit.framework.TestCase
 import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runners.MethodSorters
 
-/**
- * fun CustomTextField(hintText: String,
-text: String,
-isPasswordField: Boolean = false,
-onValueChange: (String) -> Unit,
-errorMessage: String,
-errorPresent: Boolean){
- */
-
-@FixMethodOrder(MethodSorters.DEFAULT)
+@FixMethodOrder( MethodSorters.DEFAULT)
 class CustomTextFieldTests {
     //Data to initialise component
     private val HINT_TEXT = "hint text"
@@ -42,32 +32,36 @@ class CustomTextFieldTests {
     @Test
     fun `Textfield displays expected default state while text is present`() {
         rule.setContent {
-            CustomTextField(HINT_TEXT,
-                            TEXT_TO_BE_DISPLAYED,
-                            isPassword = false,
-                            onNameChange = { textInput = it },
-                            ERROR_MESSAGE_TEXT,
-                            errorIsNotPresent
-            )
+            AndroidAppDevTheme {
+                CustomTextField(
+                    HINT_TEXT,
+                    TEXT_TO_BE_DISPLAYED,
+                    isPassword = false,
+                    onNameChange = { textInput = it },
+                    ERROR_MESSAGE_TEXT,
+                    errorIsNotPresent
+                )
+            }
         }
 
         rule.onNode(hintText).assertExists()
         rule.onNode(textToEnter).assertExists()
 
         rule.onNodeWithText(ERROR_MESSAGE_TEXT).assertDoesNotExist()
-        assertTrue(errorIsNotPresent)
+        TestCase.assertTrue(errorIsNotPresent)
     }
 
     @Test
     fun `Textfield displays expected state after additional valid text is input`() {
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(HINT_TEXT,
-                                TEXT_TO_BE_DISPLAYED,
-                                isPassword = false,
-                                onNameChange = { textInput = it },
-                                ERROR_MESSAGE_TEXT,
-                                errorIsNotPresent
+                CustomTextField(
+                    HINT_TEXT,
+                    TEXT_TO_BE_DISPLAYED,
+                    isPassword =  false,
+                    onNameChange = { textInput = it },
+                    ERROR_MESSAGE_TEXT,
+                    errorIsNotPresent
                 )
             }
         }
@@ -76,9 +70,9 @@ class CustomTextFieldTests {
         rule.onNode(textToEnter).performTextInput(ADDITIONAL_TEXT)
 
         rule.onNode(errorMessageText).assertDoesNotExist()
-        assertTrue(errorIsNotPresent)
+        TestCase.assertTrue(errorIsNotPresent)
         //Cursor is not at the end and setting the mouse cursor as such requires modification to onValueChange
-        assertEquals(textInput, ADDITIONAL_TEXT.plus(TEXT_TO_BE_DISPLAYED))
+        TestCase.assertEquals(textInput, ADDITIONAL_TEXT.plus(TEXT_TO_BE_DISPLAYED))
     }
 
     @Test
@@ -87,12 +81,13 @@ class CustomTextFieldTests {
         //Text - regardless of contents - is irrelevant to the validation in the context of this component
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(HINT_TEXT,
-                                "",
-                                isPassword = false,
-                                onNameChange = { textInput = it },
-                                ERROR_MESSAGE_TEXT,
-                                !errorIsNotPresent
+                CustomTextField(
+                    HINT_TEXT,
+                    "",
+                    isPassword = false,
+                    onNameChange = { textInput = it },
+                    ERROR_MESSAGE_TEXT,
+                    !errorIsNotPresent
                 )
             }
         }
@@ -107,17 +102,18 @@ class CustomTextFieldTests {
 
         rule.setContent {
             AndroidAppDevTheme {
-                CustomTextField(HINT_TEXT,
-                                inputText,
-                                isPassword = true,
-                                onNameChange = { textInput = it },
-                                ERROR_MESSAGE_TEXT,
-                                !errorIsNotPresent
+                CustomTextField(
+                    HINT_TEXT,
+                    inputText,
+                    isPassword = true,
+                    onNameChange = { textInput = it },
+                    ERROR_MESSAGE_TEXT,
+                    !errorIsNotPresent
                 )
             }
         }
         //Replace contents with *
-        inputText = inputText.replaceRange(0, inputText.length, "*")
+        inputText = inputText.replaceRange(0,inputText.length,"*")
         rule.onNodeWithText("****").assertExists()
     }
 }

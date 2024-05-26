@@ -24,6 +24,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
                           "proguard-rules.pro"
             )
@@ -57,7 +58,7 @@ dependencies {
 // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx:21.1.0")
     implementation("com.google.android.gms:play-services-auth:20.1.0")
-    
+
 
 // Jetpack Compose
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))

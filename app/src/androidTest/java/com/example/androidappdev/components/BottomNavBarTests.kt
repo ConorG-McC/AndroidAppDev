@@ -15,7 +15,7 @@ class BottomNavBarTests {
     val rule = createComposeRule()
 
     @Test
-    fun `bottom nav bar displays all items`() {
+    fun `bottom nav bar displays all expected items`() {
         rule.setContent {
             val navController = rememberNavController()
             AndroidAppDevTheme {

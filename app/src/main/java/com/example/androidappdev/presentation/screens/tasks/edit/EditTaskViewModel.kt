@@ -23,17 +23,18 @@ class EditTaskViewModel(private val authRepo: AuthRepo,
     var id by mutableStateOf("")
     var title by mutableStateOf("")
     var description by mutableStateOf("")
-    var taskStatus by mutableStateOf("")
+
+    private var _status = MutableLiveData<TaskStatus>()
+    val status: LiveData<TaskStatus> = _status
+
     fun setSelectedTask(task: Task) {
         id = task.id.toString()
         title = task.title.toString()
         description = task.description.toString()
-        taskStatus = task.status.toString()
+        _status.value = task.status
         selectedTask = task
     }
 
-    private var _status = MutableLiveData(TaskStatus.TODO)
-    val status: LiveData<TaskStatus> = _status
     fun onStatusChange(status: TaskStatus) {
         _status.value = status
     }
@@ -47,10 +48,12 @@ class EditTaskViewModel(private val authRepo: AuthRepo,
     }
 
     fun updateTask() {
-        selectedTask!!.title = title
-        selectedTask!!.description = description
-        selectedTask!!.status = _status.value!!
-        repo.editTask(selectedTask!!, authRepo.currentUser!!.uid)
+        selectedTask?.let {
+            it.title = title
+            it.description = description
+            it.status = _status.value ?: TaskStatus.TODO
+            repo.editTask(it, authRepo.currentUser!!.uid)
+        }
     }
 
     // Define ViewModel factory in a companion object
@@ -58,8 +61,7 @@ class EditTaskViewModel(private val authRepo: AuthRepo,
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 EditTaskViewModel(authRepo = MyAppApplication.container.authRepository,
-                                  repo = MyAppApplication.container.taskRepository
-                )
+                    repo = MyAppApplication.container.taskRepository)
             }
         }
     }

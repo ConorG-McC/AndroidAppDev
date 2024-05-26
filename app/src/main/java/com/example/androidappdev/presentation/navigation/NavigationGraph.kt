@@ -62,7 +62,7 @@ fun NavigationGraph(navController: NavHostController,
 
         }
         composable(NavScreen.Home.route) {
-            HomeScreen(stringResource(R.string.home_button),
+            HomeScreen(stringResource(R.string.home_screen_title),
                        navController,
                        modifier
             )
@@ -97,7 +97,7 @@ fun NavigationGraph(navController: NavHostController,
                             Log.v("OK", "index change event called")
                             selectedTask = it
                         },
-                        text = stringResource(R.string.tasks_button),
+                        text = stringResource(R.string.task_screen_title),
                         navController = navController
             )
         }

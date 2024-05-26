@@ -5,10 +5,12 @@ import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.example.androidappdev.R
 import com.example.androidappdev.core.MainActivity
+import com.example.androidappdev.data.task.TaskStatus
 import com.example.androidappdev.presentation.navigation.NavScreen
 import org.junit.Before
 import org.junit.Rule
@@ -20,7 +22,6 @@ open abstract class ScreenTests {
     //Nav bar items
     val bottomNavBar = hasContentDescription("bottom_nav")
     val exitNavBarItem = hasText(NavScreen.Exit.route)
-
     val homeNavBarItem =
         hasText(NavScreen.Home.route) and hasAnySibling(exitNavBarItem)
     val employeeNavBarItem =
@@ -38,25 +39,36 @@ open abstract class ScreenTests {
     lateinit var surnameTextField: SemanticsMatcher
     lateinit var alreadyAUserButton: SemanticsMatcher
 
+    //For home screen
+    lateinit var homeScreenText: SemanticsMatcher
+
+    //For Tasks screen
+    lateinit var tasksFloatingActionButton: SemanticsMatcher
+    lateinit var tasksScreenTitleText: SemanticsMatcher
+    lateinit var tasksScreenEmptyText: SemanticsMatcher
+    lateinit var addButton: SemanticsMatcher
+    lateinit var editButton: SemanticsMatcher
+    lateinit var deleteButton: SemanticsMatcher
+
+    //For add screen
+    val TASK_TITLE1 = "task1"
+    val TASK_DESCRIPTION1 = "description1"
+    val TASK_STATUS1 = TaskStatus.IN_PROGRESS
+    lateinit var taskTitleField: SemanticsMatcher
+    lateinit var taskDescriptionField: SemanticsMatcher
+    lateinit var taskStatusDropdown: SemanticsMatcher
+
+    val listItem = hasText("$TASK_TITLE1 $TASK_DESCRIPTION1 ${TASK_STATUS1.status}")
+
     //Data for add screen
 //    val FIRST_NAME1 = "first1"
 //    val SURNAME1 = "surname1"
 //    val TELNO1 = "telNo1"
 //
-
-
 //    lateinit var telephoneNumberTextField: SemanticsMatcher
 //    lateinit var addScreenText: SemanticsMatcher
-//    lateinit var addButton: SemanticsMatcher
-
-    //For home screen
-//    val listItem = hasText("$FIRST_NAME1 $SURNAME1 $TELNO1")
-    lateinit var homeScreenText: SemanticsMatcher
-
-//    lateinit var deleteButton: SemanticsMatcher
 
 
-//
 //    //For edit screen
 //    lateinit var editScreenText: SemanticsMatcher
 
@@ -82,23 +94,29 @@ open abstract class ScreenTests {
         alreadyAUserButton =
             hasContentDescription(rule.activity.getString(R.string.already_a_user) + BUTTON_POSTFIX)
 
-        homeScreenText = hasText(rule.activity.getString(R.string.home_button))
+        //Home screen
+        homeScreenText = hasText(rule.activity.getString(R.string.home_welcome_message))
+
+        //Tasks screen
+        tasksScreenEmptyText = hasText(rule.activity.getString(R.string.task_screen_default_message))
+        tasksFloatingActionButton = hasContentDescription("Add new task" )
+        taskTitleField =
+            hasContentDescription(rule.activity.getString(R.string.title_hint))
+        taskDescriptionField =
+            hasContentDescription(rule.activity.getString(R.string.description_hint))
+        taskStatusDropdown = hasContentDescription("StatusDropdown")
+        addButton = hasContentDescription(rule.activity.getString(R.string.add) + " button")
+
+        editButton = hasContentDescription(rule.activity.getString(R.string.edit) + " button")
+        deleteButton =
+            hasContentDescription(rule.activity.getString(R.string.delete) + BUTTON_POSTFIX)
 
 
-//        deleteButton =
-//            hasContentDescription(rule.activity.getString(R.string.delete) + BUTTON_POSTFIX)
-//        addButton =
-//            hasContentDescription(rule.activity.getString(R.string.add) + " button")
 
-
-//        firstNameTextField =
-//            hasContentDescription(rule.activity.getString(R.string.first_name_hint))
-//        surnameTextField =
-//            hasContentDescription(rule.activity.getString(R.string.surname_hint))
+//
 //
 //        addScreenText =
 //            hasText(rule.activity.getString(R.string.add)) and hasNoClickAction()
-//        editScreenText = hasText(rule.activity.getString(R.string.edit))
     }
 
     //Use for valid and invalid sign ins - use default values for generic log in
@@ -113,10 +131,13 @@ open abstract class ScreenTests {
     }
 
     //Used by add screen + home screen creating a user before editing
-//    fun `enter_a_valid_user`() {
-//        rule.onNode(firstNameTextField).performTextInput(FIRST_NAME1)
-//        rule.onNode(surnameTextField).performTextInput(SURNAME1)
-//
-//        rule.onNode(addButton).performClick()
-//    }
+    fun `enter_a_valid_task`() {
+        rule.onNode(taskTitleField).performTextInput(TASK_TITLE1)
+        rule.onNode(taskDescriptionField).performTextInput(TASK_DESCRIPTION1)
+        // Open the dropdown menu and select a status
+        rule.onNode(taskStatusDropdown).performClick()
+        rule.onNodeWithText(TASK_STATUS1.status).performClick()
+
+        rule.onNode(addButton).performClick()
+    }
 }

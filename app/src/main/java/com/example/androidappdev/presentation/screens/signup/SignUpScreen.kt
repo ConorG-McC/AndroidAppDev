@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -13,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidappdev.R
 import com.example.androidappdev.presentation.components.CustomButton
@@ -29,7 +33,6 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
 
     Scaffold(content = { padding ->
         val keyboard = LocalSoftwareKeyboardController.current
-        Text(text = stringResource(R.string.sign_up_screen_title))
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -37,6 +40,12 @@ fun SignUpScreen(vm: SignUpViewModel = viewModel(factory = SignUpViewModel.Facto
                verticalArrangement = Arrangement.Center,
                horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(text = stringResource(R.string.sign_up_screen_title),
+                 textAlign = TextAlign.Center,
+                 fontSize = 24.sp,
+                 fontWeight = FontWeight.Bold,
+                 modifier = Modifier.fillMaxWidth()
+            )
             CustomTextField(hintText = stringResource(R.string.first_name_hint),
                             text = vm.firstName,
                             isPassword = false,

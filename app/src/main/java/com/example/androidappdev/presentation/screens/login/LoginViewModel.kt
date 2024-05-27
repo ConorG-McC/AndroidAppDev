@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repo: AuthRepo) : ViewModel() {
     var email by mutableStateOf("")
-    var passsword by mutableStateOf("")
+    var password by mutableStateOf("")
 
     val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
     var signInResponse by mutableStateOf<SignInResponse>(Response.Startup)
@@ -32,7 +32,7 @@ class LoginViewModel(private val repo: AuthRepo) : ViewModel() {
     }
 
     fun passwordIsValid(): Boolean {
-        return passsword.isNotBlank()
+        return password.isNotBlank()
     }
 
     fun forgotPassword() {
@@ -50,7 +50,7 @@ class LoginViewModel(private val repo: AuthRepo) : ViewModel() {
     fun signInWithEmailAndPassword() = viewModelScope.launch {
         signInResponse = Response.Loading
         signInResponse =
-            repo.firebaseSignInWithEmailAndPassword(email, passsword)
+            repo.firebaseSignInWithEmailAndPassword(email, password)
     }
 
     // Define ViewModel factory in a companion object

@@ -16,6 +16,7 @@ import com.example.androidappdev.data.task.TaskStatus
 class AddTaskViewModel(private val authRepo: AuthRepo,
                        private val repo: TaskRepo
 ) : ViewModel() {
+
     private var _title = MutableLiveData(String())
     val title: LiveData<String> = _title
     fun onTitleChange(title: String) {
@@ -34,7 +35,7 @@ class AddTaskViewModel(private val authRepo: AuthRepo,
         _status.value = status
     }
 
-    private fun allDataIsValid(): Boolean {
+    fun allDataIsValid(): Boolean {
         return _title.value!!.isNotBlank() && _description.value!!.isNotBlank()
     }
 

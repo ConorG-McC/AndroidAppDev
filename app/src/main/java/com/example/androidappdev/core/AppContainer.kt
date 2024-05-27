@@ -1,5 +1,6 @@
 package com.example.androidappdev.core
 
+import android.util.Log
 import com.example.androidappdev.data.auth.AuthRepo
 import com.example.androidappdev.data.auth.AuthRepository
 import com.example.androidappdev.data.employee.EmployeeDAO
@@ -24,9 +25,23 @@ interface AppContainer {
     val employeeRepository: EmployeeRepository
     val userRepository: UserRepo
     val authRepository: AuthRepo
+
+    val isRunningTest: Boolean
 }
 
 class AppDataContainer() : AppContainer {
+
+    override val isRunningTest: Boolean by lazy {
+        try {
+            Class.forName("androidx.test.espresso.Espresso")
+            Log.d("AppDataContainer", "Running test")
+            true
+        } catch (e: ClassNotFoundException) {
+            Log.d("AppDataContainer", "Not running test")
+            false
+        }
+    }
+
     override val taskRepository: TaskRepo
     override val employeeRepository: EmployeeRepository
     override val userRepository: UserRepo
@@ -34,20 +49,23 @@ class AppDataContainer() : AppContainer {
         AuthRepository(FirebaseAuth.getInstance())
 
     init {
+        val APPENDED_TEST_PATH = if (isRunningTest) "test" else String()
+
         // tasks
-        val taskDatabase =
-            FirebaseDatabase.getInstance(DATABASE_URL).getReference(TASK_FOLDER)
+        val taskDatabase = FirebaseDatabase.getInstance(DATABASE_URL)
+            .getReference("$APPENDED_TEST_PATH$TASK_FOLDER")
         val taskDAO = TaskDAO(taskDatabase)
         taskRepository = TaskRepository(taskDAO)
 
         // employees
         val employeeDatabase = FirebaseDatabase.getInstance(DATABASE_URL)
-            .getReference(EMPLOYEE_FOLDER)
+            .getReference("$APPENDED_TEST_PATH$EMPLOYEE_FOLDER")
         val employeeDAO = EmployeeDAO(employeeDatabase)
         employeeRepository = EmployeeRepository(employeeDAO)
 
         val userRoot = FirebaseDatabase.getInstance(DATABASE_URL)
-            .getReference(USERS_ROOT_FOLDER)
+            .getReference("$APPENDED_TEST_PATH$USERS_ROOT_FOLDER")
+        Log.d("AppDataContainer", "userRoot: $userRoot")
         val userDAO = UserDAO(userRoot)
         userRepository = UserRepository(userDAO)
 

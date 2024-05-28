@@ -8,6 +8,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import com.example.androidappdev.R
 import com.example.androidappdev.core.MainActivity
 import com.example.androidappdev.data.task.TaskStatus
@@ -58,20 +59,13 @@ open abstract class ScreenTests {
     lateinit var taskDescriptionField: SemanticsMatcher
     lateinit var taskStatusDropdown: SemanticsMatcher
 
-    val listItem =
-        hasText("$TASK_TITLE1 $TASK_DESCRIPTION1 ${TASK_STATUS1.status}")
+    //For edit screen
+    val TASK_TITLE2 = "task2"
+    val TASK_DESCRIPTION2 = "description2"
+    val TASK_STATUS2 = TaskStatus.DONE
+    lateinit var saveButton: SemanticsMatcher
+    lateinit var  closeButton: SemanticsMatcher
 
-    //Data for add screen
-//    val FIRST_NAME1 = "first1"
-//    val SURNAME1 = "surname1"
-//    val TELNO1 = "telNo1"
-//
-//    lateinit var telephoneNumberTextField: SemanticsMatcher
-//    lateinit var addScreenText: SemanticsMatcher
-
-
-//    //For edit screen
-//    lateinit var editScreenText: SemanticsMatcher
 
     @Before
     open fun setUp() {
@@ -110,17 +104,17 @@ open abstract class ScreenTests {
         taskStatusDropdown = hasContentDescription("StatusDropdown")
         addButton =
             hasContentDescription(rule.activity.getString(R.string.add) + " button")
-
         editButton =
             hasContentDescription(rule.activity.getString(R.string.edit) + " button")
         deleteButton =
             hasContentDescription(rule.activity.getString(R.string.delete) + BUTTON_POSTFIX)
 
+        //Edit screen
+        saveButton =
+            hasContentDescription(rule.activity.getString(R.string.save) + BUTTON_POSTFIX)
+        closeButton =
+            hasContentDescription(rule.activity.getString(R.string.close) + BUTTON_POSTFIX)
 
-//
-//
-//        addScreenText =
-//            hasText(rule.activity.getString(R.string.add)) and hasNoClickAction()
     }
 
     //Use for valid and invalid sign ins - use default values for generic log in
@@ -155,4 +149,25 @@ open abstract class ScreenTests {
 
         rule.onNode(addButton).performClick()
     }
+
+    fun `edit_selected_task_with_valid_details`() {
+        rule.onNode(taskTitleField).performTextReplacement(TASK_TITLE2)
+        rule.onNode(taskDescriptionField).performTextReplacement(TASK_DESCRIPTION2)
+        // Open the dropdown menu and select a status
+        rule.onNode(taskStatusDropdown).performClick()
+        rule.onNodeWithText(TASK_STATUS2.status).performClick()
+
+        rule.onNode(saveButton).performClick()
+    }
+
+    fun `edit_selected_task_with_invalid_details`() {
+        rule.onNode(taskTitleField).performTextReplacement("")
+        rule.onNode(taskDescriptionField).performTextReplacement("")
+        // Open the dropdown menu and select a status
+        rule.onNode(taskStatusDropdown).performClick()
+        rule.onNodeWithText(TASK_STATUS2.status).performClick()
+
+        rule.onNode(saveButton).performClick()
+    }
+
 }

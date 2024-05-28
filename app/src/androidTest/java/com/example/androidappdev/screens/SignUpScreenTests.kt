@@ -1,6 +1,7 @@
 package com.example.androidappdev.screens
 
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.example.androidappdev.R
@@ -56,6 +57,21 @@ class SignUpScreenTests : ScreenTests() {
         val pageTitle =
             hasText(rule.activity.getString(R.string.sign_up_screen_title))
         rule.onNode(pageTitle).assertExists()
+    }
+
+    @Test
+    fun `When sign up details are incomplete the correct error messages are shown on text fields`() {
+        rule.onNode(signUpButton).performClick()
+
+        var ERROR_MESSAGE_TEXT_FIRST_NAME = "First Name is blank"
+        var ERROR_MESSAGE_TEXT_SURNAME = "Surname is blank"
+        var ERROR_MESSAGE_TEXT_EMAIL = "Please insert a valid email."
+        var ERROR_MESSAGE_TEXT_PASSWORD = "Please insert a valid password"
+
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_FIRST_NAME).assertExists()
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_SURNAME).assertExists()
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_EMAIL).assertExists()
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_PASSWORD).assertExists()
     }
 
     @Test

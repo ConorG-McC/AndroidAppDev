@@ -1,6 +1,7 @@
 package com.example.androidappdev.screens
 
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -61,9 +62,12 @@ open class LoginScreenTests : ScreenTests() {
 
     }
 
-    //@Test
-    fun `invalid request for forgot password`() {
-
+    @Test
+    fun `Error message is shown when invalid request for forgot password is attempted`() {
+        var ERROR_MESSAGE_TEXT = "Please insert a valid email."
+        rule.onNode(emailAddressTextField).performTextInput("")
+        rule.onNode(forgotPasswordButton).performClick()
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT).assertExists()
     }
 }
 //https://developer.android.com/training/testing/espresso/idling-resource

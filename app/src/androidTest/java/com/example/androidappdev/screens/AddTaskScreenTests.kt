@@ -35,6 +35,17 @@ class AddTaskScreenTests : ScreenTests() {
     }
 
     @Test
+    fun `Error messages are shown for incomplete text fields`() {
+        `go to the Add Task screen`()
+
+        var ERROR_MESSAGE_TEXT_TITLE = "Title is blank"
+        var ERROR_MESSAGE_TEXT_DESCRIPTION = "Description is blank"
+
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_TITLE).assertExists()
+        rule.onNodeWithText(ERROR_MESSAGE_TEXT_DESCRIPTION).assertExists()
+    }
+
+    @Test
     fun `When a valid task is added or deleted the list should reflect appropriately`() {
         `go to the Add Task screen`()
 

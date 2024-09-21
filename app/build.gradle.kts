@@ -84,7 +84,7 @@ dependencies {
     implementation("androidx.room:room-common:2.6.1")
 
 // Core Android KTX
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
 
 // Testing
     testImplementation("junit:junit:4.13.2")

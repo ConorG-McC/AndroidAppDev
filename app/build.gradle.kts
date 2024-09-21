@@ -61,7 +61,7 @@ dependencies {
 
 
 // Jetpack Compose
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.09.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -73,7 +73,7 @@ dependencies {
 
 // Lifecycle & LiveData
     implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
 // Navigation Components
@@ -89,10 +89,10 @@ dependencies {
 // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
 // Jetpack Compose Testing
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
 // Debugging (Jetpack Compose)

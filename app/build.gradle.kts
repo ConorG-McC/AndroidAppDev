@@ -52,7 +52,7 @@ android {
 
 dependencies {
     // Firebase Integration
-    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-database-ktx")
 
 // Firebase Authentication

@@ -78,7 +78,7 @@ dependencies {
 
 // Navigation Components
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.8.1")
 
 // Room Database
     implementation("androidx.room:room-common:2.6.1")
